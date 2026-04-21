@@ -1,0 +1,646 @@
+% ============================================================
+% PROPOSITION COMMERCIALE - Plateforme de Location de Voitures
+% Document LaTeX professionnel (6-7 pages, noir & blanc)
+% Format : A4, police Times New Roman, mise en page élégante
+% ============================================================
+
+\documentclass[12pt, a4paper]{article}
+
+% --- Packages essentiels ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{times}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{titling}
+\usepackage{lipsum}
+
+% --- Configuration geometry ---
+\geometry{
+  top=2.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm,
+  headheight=15pt
+}
+
+% --- Configuration titres ---
+\titleformat{\section}
+  {\large\bfseries\scshape\uppercase}
+  {}
+  {0pt}
+  {}
+  []%
+
+\titleformat{\subsection}
+  {\normalsize\bfseries}
+  {}
+  {0pt}
+  {}
+  []%
+
+\titleformat{\subsubsection}
+  {\normalsize\itshape}
+  {}
+  {0pt}
+  {}
+  []%
+
+% --- En-têtes et pieds de page ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{Proposition Technique \& Commerciale}}
+\fancyhead[R]{\small\textit{Plateforme de Location de Voitures}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- Variables personnalisées ---
+\newcommand{\companyName}{VOTRE ENTREPRISE}
+\newcommand{\clientName}{Agence de Location}
+\newcommand{\projectName}{Plateforme Web de Gestion et Réservation de Véhicules}
+\newcommand{\proposalDate}{\today}
+\newcommand{\budgetRange}{3\,500 -- 3\,950\ TND}
+\newcommand{\timeline}{4--5 semaines}
+
+% --- Informations auteur ---
+\title{
+  \textbf{PROPOSITION DE DÉVELOPPEMENT}\\
+  \large{\projectName}\\
+  \vspace{0.5cm}
+  \includegraphics[width=0.4\textwidth]{logo.png}\\
+  \vspace{0.5cm}
+  \large{\companyName}
+}
+\author{}
+\date{\textbf{\proposalDate}\\Version 1.0}
+
+% ============================================================
+% DEBUT DOCUMENT
+% ============================================================
+\begin{document}
+
+% --- Page de titre ---
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+  {\LARGE\bfseries PROPOSITION DE DÉVELOPPEMENT}\\
+  \vspace{0.5cm}
+  {\Large\bfseries Plateforme de Location de Voitures}\\
+  \vspace{1.5cm}
+  {\large Conception \& Réalisation d'une solution web complète}\\
+  \vspace{2cm}
+  {\bfseries Stack technique : NestJS + Angular + PostgreSQL}\\
+  \vspace{2cm}
+  \begin{tabular}{l l}
+    \textbf{Client :} & \clientName \\
+    \textbf{Date :} & \proposalDate \\
+    \textbf{Réf. :} & PROP-CAR-2025-001 \\
+    \textbf{Validité :} & 30 jours \\
+  \end{tabular}
+  \vspace{2cm}
+  \rule{\textwidth}{0.4pt}\\
+  \vspace{0.5cm}
+  {\footnotesize \companyName -- Département Solutions Web -- contact@entreprise.tn -- +216 XX XXX XXX}
+\end{titlepage}
+
+% --- Page de garde (sommaire) ---
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+% ============================================================
+% SECTION 1 : RÉSUMÉ EXÉCUTIF
+% ============================================================
+\section{Résumé Exécutif}
+
+\subsection{Introduction}
+
+Notre entreprise vous propose le développement d'une \textbf{plateforme web complète de gestion et réservation de véhicules}, conçue spécifiquement pour les agences de location mono-site. Cette solution moderne, robuste et évolutive combine les technologies les plus fiables du marché : \textbf{NestJS} pour le backend, \textbf{Angular} pour le frontend, et \textbf{PostgreSQL} pour la base de données.
+
+\subsection{Pourquoi ce projet ?}
+
+Le marché de la location de voitures en Tunisie connaît une transformation digitale accélérée. Les clients exigent désormais :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Réservation en ligne en temps réel (24/7)
+  \item Paiement électronique sécurisé (cartes, mobile money)
+  \item Expérience utilisateur fluide sur mobile et desktop
+  \item Accès à l'historique, contrats PDF, gestion de profil
+  \item Transparence sur les disponibilités et tarifs
+\end{itemize}
+
+Sans présence en ligne structurée, votre agence risque de perdre des parts de marché au profit de concurrents déjà digitalisés.
+
+\subsection{Notre engagement}
+
+Nous livrons une solution \textbf{clé en main} comprenant :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Catalogue en ligne} avec filtres avancés (catégorie, carburant, prix, dates)
+  \item \textbf{Système de réservation} intelligent avec vérification de disponibilité en temps réel
+  \item \textbf{Paiements sécurisés} intégrant Click to Pay (Tunisie) et Stripe (international)
+  \item \textbf{Back-office complet} pour gérer flotte, clients, réservations, finances
+  \item \textbf{Génération automatique} de contrats PDF
+  \item \textbf{Notifications emails} (confirmation, rappels, statuts)
+  \item \textbf{Dashboard analytique} avec KPIs temps réel
+\end{itemize}
+
+\vspace{0.5cm}
+\noindent\textbf{Budget total :} \budgetRange \\
+\textbf{Délai de réalisation :} \timeline \\
+\textbf{Équipe dédiée :} 1 chef de projet, 2 développeurs full-stack, 1 QA
+
+% ============================================================
+% SECTION 2 : CONTEXTE ET PROBLÉMATIQUE
+% ============================================================
+\section{Contexte et Problématique}
+
+\subsection{Analyse du besoin}
+
+Votre agence gère actuellement un parc de \textbf{~50 véhicules} avec des processus majoritairement manuels :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Réservations par téléphone / email / réception physique
+  \item Suivi des véhicules sur feuilles Excel ou registres papier
+  \item Paiements en espèces principalement (risques de sécurité, traçabilité limitée)
+  \item Gestion des contrats manuelle (impression, archivage)
+  \item Aucune visibilité en ligne → absence de réservations spontanées
+  \item Difficulté à anticiper les tendances (saisonnalité, véhicules populaires)
+\end{itemize}
+
+\subsection{Conséquences}
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Perte de clients préférant la commodité du digital
+  \item Charge administrative élevée (saisie manuelle double)
+  \item Risques d'erreurs humaines (doublons, erreurs de disponibilité)
+  \item Liquidités transactionnelles limitées
+  \item Difficulté à concurrencer les agences nationales avec plateformes en ligne
+\end{itemize}
+
+\subsection{Solution proposée}
+
+Développement d'une \textbf{plateforme web responsive} (mobile-first) permettant :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Aux \textbf{clients finaux} : parcourir le catalogue, réserver en ligne, payer électroniquement, télécharger contrats, gérer historique
+  \item Aux \textbf{administrateurs} : gérer flotte, tarifs, maintenance, dashboard analytique, reporting
+  \item Aux \textbf{opérateurs} : traiter réservations, suivre paiements, imprimer contrats
+\end{itemize}
+
+% ============================================================
+% SECTION 3 : ARCHITECTURE TECHNIQUE
+% ============================================================
+\section{Architecture Technique}
+
+\subsection{Schéma global}
+
+\begin{figure}[h]
+  \centering
+  \fbox{
+    \begin{minipage}{0.9\textwidth}
+      \centering
+      \textbf{Architecture 3-tiers modulaire}
+      \vspace{0.5cm}
+
+      \begin{tabular}{c}
+        \textbf{Frontend Angular 17} \\
+        (SPA Responsive) \\
+        \downarrow \\
+        \textbf{Backend NestJS API REST} \\
+        (Node.js 20 LTS) \\
+        \downarrow \\
+        \textbf{Base de données PostgreSQL} \\
+        (Prisma ORM) \\
+      \end{tabular}
+      \vspace{0.5cm}
+
+      Services auxiliaires : Redis (cache), Nodemailer (emails), PDFKit (contrats), Stripe/Click to Pay (paiements)
+    \end{minipage}
+  }
+  \caption{Architecture générale}
+\end{figure}
+
+\subsection{Stack technique détaillée}
+
+\subsubsection*{Backend : NestJS + Prisma ORM}
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{NestJS} : Framework structurant (modules, injection de dépendances)
+  \item \textbf{Prisma} : ORM performant, génération automatique de migrations
+  \item \textbf{PostgreSQL 16} : Base relationnelle robuste
+  \item \textbf{JWT} : Authentification sans état (stateless)
+  \item \textbf{Redis} : Cache sessions, rate limiting
+  \item \textbf{Swagger} : Documentation API interactive (\texttt{/api/docs})
+\end{itemize}
+
+\subsubsection*{Frontend : Angular 17}
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Angular Material} : Composants UI Material Design
+  \item \textbf{NgRx} : Gestion d'état centralisée
+  \item \textbf{Chart.js} : Graphiques dashboard admin
+  \item \textbf{ngx-stripe} : Intégration paiements Stripe Elements
+  \item \textbf{Responsive design} : Mobile-first, breakpoints 375px/768px/1024px/1440px
+\end{itemize}
+
+\subsubsection*{Infrastructure}
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Nginx} : Reverse proxy, compression GZIP, SSL termination
+  \item \textbf{Let's Encrypt} : Certificats SSL gratuits (HTTPS obligatoire)
+  \item \textbf{PM2} : Process manager (auto-restart, logs)
+  \item \textbf{Ubuntu 22 LTS} : Système d'exploitation serveur
+\end{itemize}
+
+% ============================================================
+% SECTION 4 : MODULES FONCTIONNELS
+% ============================================================
+\section{Modules Fonctionnels Détailés}
+
+\subsection{Catalogue Véhicules (Public)}
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Affichage paginé (12 véhicules/page) avec filtres dynamiques :
+    \begin{itemize}[leftmargin=*,noitemsep]
+      \ Catégorie (Économie, Compact, SUV, Luxe...)
+      \ Carburant (Essence, Diesel, Hybride, Électrique)
+      \ Transmission (Manuelle/Automatique)
+      \ Prix quotidien (min/max)
+      \ Nombre de places
+      \ Disponibilités par dates (calendrier)
+    \end{itemize}
+  \item Tri : prix croissant/décroissant, nouveauté, popularité
+  \item Fiche détaillée par véhicule (photos, caractéristiques, avis clients)
+  \item Indicateur de disponibilité en temps réel
+  \item Calcul automatique du prix selon durée et règles tarifaires
+\end{itemize}
+
+\subsection{Système de Réservation}
+
+Flux client en 4 étapes :
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item \textbf{Sélection véhicule + dates} : affichage du prix estimé
+  \item \textbf{Informations personnelles} : formulaire client (CIN permis, coordonnées)
+  \item \textbf{Choix paiement} : Click to Pay (Tunisie) ou Stripe (international)
+  \item \textbf{Confirmation} : génération contrat PDF + email de confirmation
+\end{enumerate}
+
+Règles métier appliquées :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Vérification conflit de dates (pas de chevauchements)
+  \item Statut véhicule obligatoire (disponible, pas en maintenance)
+  \item Date de début dans le futur (pas de réservation passée)
+  \item Calcul du prix : tarif journalier × durée + cautions – réductions éventuelles
+  \item Application automatique des règles tarifaires (saisonnières, weekend, long terme)
+\end{itemize}
+
+\subsection{Gestion des Paiements}
+
+\subsubsection*{Click to Pay (Banque Centrale de Tunisie)}
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Solution officielle} : Plateforme de paiement en ligne régulée par la Banque Centrale de Tunisie
+  \item Intégration via \textbf{API REST Click to Pay} avec redirection sécurisée vers portail bancaire
+  \item Accepte toutes les cartes bancaires tunisiennes (Visa, Mastercard, Carte Bancaire)
+  \item 3D Secure renforcé conforme aux normes bancaires tunisiennes
+  \item Webhook de confirmation avec vérification signature HMAC
+  \item Statuts temps réel : autorisation, confirmation, annulation, remboursement
+  \item Avantage : \textbf{coûts de transaction réduits} (interbancaire), confiance utilisateur maximale
+\end{itemize}
+
+\subsubsection*{Stripe (Paiements internationaux)}
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Intégration Stripe Elements (champs carte sécurisés)
+  \item PaymentIntent + 3D Secure automatique
+  \item Support cartes Visa/Mastercard/Amex
+  \item Webhook confirmation + gestion remboursements
+  \item Cible : touristes, expatriés, clients internationaux
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent\textbf{Sécurité :} Aucune donnée bancaire stockée côté serveur (PCI DSS compliant). Les deux gateways sont hébergées et sécurisées par leurs institutions respectives.
+
+\subsection{Stratégie de Paiement}
+
+Nous adoptons une approche \textbf{dual-gateway} pour maximiser le taux de conversion :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Client tunisien → automatiquement redirigé vers \textbf{Click to Pay} (frais réduits, familiarité)
+  \item Client international → automatiquement redirigé vers \textbf{Stripe} (acceptation globale)
+  \item Détection automatique par géolocalisation IP + choix manuel disponible
+  \item Unified backend : tous les paiements gérés par une API commune unifiée
+\end{itemize}
+
+\subsection{Avantages de Click to Pay (BCT)}
+
+\begin{itemize}[leftmargin=*,noitemsep]
+   \item \textbf{Frais de transaction avantageux} : taux préférentiels interbancaires (1.2--1.8\% vs solutions tierces)
+   \item \textbf{Confiance maximale} : solution officielle de la Banque Centrale de Tunisie
+  \item \textbf{Expérience fluide} : single-click payment pour clients enregistrés
+  \item \textbf{Sécurité bancaire} : authentification forte 3D Secure obligatoire
+  \item \textbf{Règlement rapide} : délais de virement réduits (24--48h vs 72h+)
+  \item \textbf{Soutien à l'économie locale} : privilégier les solutions bancaires tunisiennes
+\end{itemize}
+
+\subsection{Back-office Administrateur}
+
+Dashboard complet avec modules :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Véhicules} : CRUD complet, upload images multiples, changement statut (disponible/loué/maintenance)
+  \item \textbf{Réservations} : Vue tableau + calendrier, filtres par statut/client/véhicule, actions (confirmer, annuler, marquer payé)
+  \item \textbf{Clients} : Liste clients, historique, statut actif/inactif
+  \item \textbf{Finances} : Revenus par période, gráphiques mensuels, exports CSV
+  \item \textbf{Maintenance} : Suivi entretiens, alertes automatiques (next due date), documentation PDF
+  \item \textbf{Tarifs} : Configuration règles (saison, weekend, promotions), application automatique
+  \item \textbf{Config agence} : Informations contact, heures d'ouverture, politique d'annulation
+\end{itemize}
+
+\subsection{Notifications Automatiques}
+
+Envoyées automatiquement via SMTP (Nodemailer + Handlebars) :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item Confirmation réservation (avec lien contrat PDF)
+  \item Rappel 24h avant départ
+  \item Confirmation paiement réussi
+  \item Notification annulation (avec motif)
+  \item Alerte maintenance (admin uniquement)
+\end{itemize}
+
+% ============================================================
+% SECTION 5 : SÉCURITÉ ET CONFORMITÉ
+% ============================================================
+\section{Sécurité et Conformité}
+
+\subsection{Protocoles de sécurité implémentés}
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{HTTPS obligatoire} (Let's Encrypt SSL) — chiffrement TLS 1.3
+  \item \textbf{Authentification JWT} : tokens court terme (15 min) + refresh tokens sécurisés (7 jours, stockés HttpOnly cookies)
+  \item \textbf{Rate limiting} : protection anti-brute force (5 tentatives login / 15 min)
+  \item \textbf{Validation DTO} : filtrage strict des entrées (whitelist), conversion automatique types
+  \item \textbf{Headers de sécurité} : Helmet.js activé (XSS, CSRF, HSTS)
+  \item \textbf{Backups automatiques} : dump PostgreSQL quotidien (cron)
+  \item \textbf{Aucune donnée bancaire stockée} : seul ID transaction gateway conservé
+  \item \textbf{Logs sécurisés} : rotation journalière, accès restreint aux logs
+\end{itemize}
+
+\subsection{Rôles et permissions}
+
+Matrice fine des droits :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Visiteur} : consultation catalogue + disponibilités
+  \item \textbf{Client} : réservation, paiement, historique, annulation (selon politique)
+  \item \textbf{Admin} : accès total (flotte, clients, réservations, finances, maintenance)
+\end{itemize}
+
+\subsection{Conformité réglementaire}
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item RGPD / Loi tunisienne protection données : consentement explicite, droit d'accès/rectification
+  \item Conditions générales de location intégrées au contrat PDF
+  \item Politique d'annulation personnalisable (48h gratuit, frais 30--50--100\% selon délai)
+  \item Archivage numérique des contrats (10 ans recommandé)
+  \item \textbf{Conformité bancaire} : intégration Click to Pay conforme aux normes de la Banque Centrale de Tunisie
+  \item \textbf{Souveraineté financière} : paiements locaux traités entièrement dans l'écosystème bancaire tunisien
+\end{itemize}
+
+% ============================================================
+% SECTION 6 : PLANNING ET LIVRABLES
+% ============================================================
+\section{Planning et Livrables}
+
+\subsection{Méthodologie}
+
+Approche \textbf{Agile / Scrum} avec sprints de 1--2 semaines (rythme accéléré) :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item RéunionsDaily stand-up (15 min) — parfois 2x/jour en période de crunch
+  \item Reviews chaque fin de sprint avec démonstration live
+  \item Backlog priorisé (MoSCoW : Must/Should/Could/Won't)
+  \item Livraisons incrémentales (version disponible en staging chaque 3--4 jours)
+\end{itemize}
+
+\subsection{Calendrier détaillé (4--5 semaines)}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{p{3cm} p{10cm} l}
+    \toprule
+    \textbf{Sprint} & \textbf{Livrables} & \textbf{Durée} \\
+    \midrule
+    Sprint 1 & Setup complet projet (NestJS + Angular + PostgreSQL), Auth (JWT, register/login), Swagger docs, Prisma migrations & Sem. 1-2 \\
+    Sprint 2 & Module Vehicles + Bookings (catalogue, filtres, réservation, disponibilité, contrats PDF), notifications emails, maintenance & Sem. 2-3 \\
+    Sprint 3 & Intégrations paiement Click to Pay + Stripe (webhooks, remboursements), fin dashboard admin, optimisation Redis & Sem. 3-4 \\
+    Sprint 4 & Tests intensifs + corrections, préproduction, déploiement production, formation admin, documentation finale & Sem. 4-5 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Planning accéléré de développement par sprint (méthode parallélisée)}
+\end{table}
+
+\subsection{Approche accélérée}
+
+Pour respecter le délai de 4--5 semaines, nous appliquons une méthodologie \textbf{parallelisée et agile} :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Développeurs full-stack} : chaque développeur travaille simultanément sur backend + frontend des mêmes modules
+  \item \textbf{Modules couplés} : Auth + Vehicles en parallèle, puis Bookings + Payments en parallèle
+  \item \textbf{Intégration continue} : chaque fonctionnalité est testée et intégrée immédiatement
+  \item \textbf{Daily stand-up renforcé} : points quotidiens pour débloquer rapidement
+  \item \textbf{Feature flags} : déploiement progressif sans bloquer les autres modules
+  \item \textbf{Weekends codage} (si nécessaire) avec récupération compensatoire
+\end{itemize}
+
+\subsection{Livrables clés (inchangés)}
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Code source} complet (Git repository) avec documentation technique
+  \item \textbf{API REST} documentée Swagger (\texttt{/api/docs})
+  \item \textbf{Base de données} migrée avec données de démonstration (3 véhicules + admin)
+  \item \textbf{Frontends} (client + admin) compilés et prêts pour production
+  \item \textbf{Scripts} de déploiement automatisé (Docker, Nginx, PM2, SSL)
+  \item \textbf{Contrats PDF} générés automatiquement
+  \item \textbf{Manuel d'utilisation} (PDF) pour administrateurs et clients
+  \item \textbf{Support post-livraison} : 1 mois de garantie corrective
+\end{itemize}
+
+% ============================================================
+% SECTION 7 : BUDGET ET ROI
+% ============================================================
+\section{Budget et Retour sur Investissement}
+
+\subsection{Estimation détaillée}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l r}
+    \toprule
+    \textbf{Détail poste} & \textbf{Coût (USD)} \\
+    \midrule
+    \textbf{Backend NestJS (API complète)} & 1\,200 -- 1\,300 \\
+    \textbf{Frontend Angular (client + admin)} & 1\,100 -- 1\,200 \\
+    \textbf{Intégrations paiement (Click to Pay + Stripe)} & 500 -- 600 \\
+    \textbf{Génération PDF contrats} & 150 -- 200 \\
+    \textbf{Module notifications + emails} & 150 -- 200 \\
+    \textbf{Tests unitaires + E2E} & 300 -- 350 \\
+    \textbf{Déploiement + configuration serveur} & 150 -- 200 \\
+    \midrule
+    \textbf{\large TOTAL DÉVELOPPEMENT} & \textbf{\large 3\,450 -- 3\,950} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Budget détaillé du projet — version complète}
+\end{table}
+
+\subsection{Coûts récurrents mensuels (après livraison)}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l r}
+    \toprule
+    \textbf{Service} & \textbf{Coût mensuel (TND)} \\
+    \midrule
+    Hébergement VPS (4GB RAM, 80GB SSD) & 30 -- 60 \\
+    Nom de domaine (.tn) & 2 -- 4 / an \\
+    Certificat SSL Let's Encrypt & Gratuit \\
+    Commission Click to Pay (BCT) & 1.2\% -- 1.8\% / transaction \\
+    Commission Stripe (international) & 1.4\% + 0.25\$ / transaction \\
+    Service SMTP (Gmail / Mailtrap) & 0 -- 15 \\
+    \midrule
+    \textbf{TOTAL RÉCURRENT (hors commissions)} & \textbf{~32 -- 75 TND/mois} \\
+    \bottomrule
+  \end{tabular}
+  \caption{Coûts opérationnels mensuels}
+\end{table}
+
+\subsection{Retour sur Investissement (ROI)}
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Augmentation réservations} : +40--60\% grâce au canal en ligne 24/7
+  \item \textbf{Réduction charge administrative} : -30\% (automatisation factures, contrats, emails)
+  \item \textbf{Minimisation erreurs} : -80\% conflits de dates, double-réservations
+  \item \textbf{Élargissement clientèle} : acceptation paiements internationaux (Stripe) → +15\% touristes/expats
+  \item Amélioration trésorerie : paiements en ligne instantanés vs 30--60 jours délai
+  \item Image de marque : perception professionnelle, confiance accrue
+\end{itemize}
+
+\vspace{0.5cm}
+\noindent Amortissement prévu : \textbf{4--6 mois} (développement accéléré + ROI rapide)
+
+% ============================================================
+% SECTION 8 : PERSPECTIVES FUTURES
+% ============================================================
+\section{Évolutions et Innovations Futures}
+
+\subsection{Feuille de route (post-livraison)}
+
+Notre solution est conçue pour évoluer. Voici les améliorations envisageables à court/moyen terme :
+
+\begin{enumerate}[leftmargin=*,noitemsep]
+  \item \textbf{Application mobile native} (React Native / Flutter) : réservations depuis smartphone, carte de fidélité digitale, notifications push
+  \item \textbf{GPS / Tracking temps réel} : géolocalisation véhicules, alertes zone, consommation carburant
+  \item \textbf{Intelligence Artificielle} : recommandations personnalisées (upsell, cross-sell), détection fraudes, optimisation tarifs dynamiques (yield management)
+  \item \textbf{Comparaison multi-agences} : agrégateur pour comparer vos prix avec concurrents locaux
+  \item \textbf{Compte client premium} : abonnement mensuel pour réductions exclusives, priorité réservation
+  \item \textbf{Interface API publique} : partenariats avec hôtels, agences de voyage (B2B)
+  \item \textbf{Module comptabilité intégré} : exports automatiques pour expert-comptable, TVA, facturation électronique
+  \item \textbf{Système de fidélité} : points, parrainage, récompenses
+\end{enumerate}
+
+\subsection{Intégration IA générative (à venir)}
+
+Nous prévoyons d'ajouter des fonctionnalités d'IA conversationnelle :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Chatbot client 24/7} : réponses automatiques aux questions fréquentes (tarifs, disponibilités, documents requis)
+  \item \textbf{Génération automatique de descriptions} : enrichissement catalogue via IA
+  \item \textbf{Analyse des avis clients} : sentiment analysis, détection sujets récurrents
+  \item \textbf{Optimisation dynamique des prix} : saisonnalité, demande, événements locaux
+\end{itemize}
+
+% ============================================================
+% SECTION 9 : NOTRE EXPERTISE ET GARANTIES
+% ============================================================
+\section{Notre Expertise et Garanties}
+
+\subsection{Pourquoi nous choisir ?}
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Expérience avérée} : +5 ans en développement web, +30 projets livrés (NestJS, Angular)
+  \item \textbf{Stack moderne} : technologies éprouvées, communautés actives, maintenance facilitée
+  \item \textbf{Code propre et documenté} : architecture modulaire, respect principes SOLID
+  \item \textbf{Sécurité by design} : audits internes, tests penetration (OWASP)
+  \item \textbf{Accompagnement continu} : support technique 24/7, formations utilisateurs
+  \item \textbf{Équipe dédiée} : 1 chef de projet, 2 développeurs full-stack seniors, 1 QA engineer
+\end{itemize}
+
+\subsection{Garanties contractuelles}
+
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Garantie corrective} : 12 mois sur bugs fonctionnels
+  \item \textbf{Tests exhaustifs} : couverture 80\%+ (unitaires + E2E Cypress)
+  \item \textbf{Performance garantie} : temps réponse < 200ms, chargement pages < 3s (Lighthouse score > 90)
+  \item \textbf{Documentation complète} : spécifications techniques, guide déploiement, manuels utilisateurs
+  \item \textbf{Formations} : 2 sessions (admin + opérateurs) + enregistrements vidéo
+  \item \textbf{Accès au code source} : dépôt Git privé, documentation architecture
+\end{itemize}
+
+% ============================================================
+% SECTION 10 : CONCLUSION
+% ============================================================
+\section{Conclusion}
+
+\vspace{0.5cm}
+\noindent La digitalisation de votre agence de location de voitures n'est plus une option, mais une \textbf{nécessité stratégique} pour rester compétitif dans un marché en pleine mutation.
+
+Notre proposition vous offre une solution \textbf{complète, sécurisée et évolutive} qui vous permettra de :
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \textbf{Augmenter votre chiffre d'affaires} via les réservations en ligne
+  \item \textbf{Réduire vos coûts opérationnels} par l'automatisation des tâches répétitives
+  \item \textbf{Améliorer la satisfaction client} avec une expérience moderne et fluide
+  \item \textbf{Anticiper l'avenir} avec une architecture modulaire prête pour l'IA et la mobilité
+\end{itemize}
+
+Nous sommes convaincus que ce projet marquera un tournant dans le développement de votre entreprise et nous nous tenons à votre disposition pour répondre à toutes vos questions et ajuster la proposition à vos besoins spécifiques.
+
+\vspace{1.5cm}
+\noindent\textbf{Nous vous remercions de l'attention portée à cette proposition et restons à votre disposition pour toute discussion technique ou commerciale.}
+
+% ============================================================
+% ANNEXES
+% ============================================================
+\appendix
+\section{Spécifications techniques détaillées}
+\subsection{Base de données — Schéma Prisma (extrait)}
+
+\begin{verbatim}
+model Vehicle {
+  id            Int             @id @default(autoincrement())
+  registration  String          @unique
+  brand         String
+  model         String
+  year          Int
+  category      VehicleCategory
+  fuelType      FuelType
+  transmission  Transmission
+  seats         Int             @default(5)
+  doors         Int             @default(4)
+  dailyRate     Decimal         @db.Decimal(10, 3)
+  depositAmount Decimal         @db.Decimal(10, 3)
+  status        VehicleStatus   @default(AVAILABLE)
+  images        VehicleImage[]
+  bookings      Booking[]
+  ...
+}
+\end{verbatim}
+
+\subsection{API REST — Endpoints principaux}
+\begin{itemize}[leftmargin=*,noitemsep]
+  \item \texttt{POST /api/v1/auth/register} — Inscription client
+  \item \texttt{POST /api/v1/auth/login} — Connexion
+  \item \texttt{GET /api/v1/vehicles} — Liste véhicules (filtres pagination)
+  \item \texttt{GET /api/v1/vehicles/:id} — Détail véhicule
+  \item \texttt{POST /api/v1/bookings} — Créer réservation
+  \item \texttt{POST /api/v1/payments/clicktopay} — Initier paiement Click to Pay
+  \item \texttt{POST /api/v1/payments/stripe} — Créer intent Stripe
+  \item \texttt{GET /api/v1/admin/dashboard} — Stats admin (protégé ADMIN)
+\end{itemize}
+
+\end{document}
