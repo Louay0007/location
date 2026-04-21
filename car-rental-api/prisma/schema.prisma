@@ -61,6 +61,7 @@ enum PaymentMethod {
   PAYMEE
   STRIPE
   CASH
+  BANK_TRANSFER
 }
 
 enum TransactionType {

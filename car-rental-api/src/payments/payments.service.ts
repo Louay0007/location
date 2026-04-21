@@ -1,9 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { PaymeeService } from './paymee/paymee.service';
+import { StripeService } from './stripe/stripe.service';
 
 @Injectable()
 export class PaymentsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private paymeeService: PaymeeService,
+    private stripeService: StripeService,
+  ) {}
 
   async confirmByGatewayToken(gatewayId: string) {
     const payment = await this.prisma.payment.findFirst({ where: { gatewayPaymentId: gatewayId } });
@@ -39,7 +45,9 @@ export class PaymentsService {
     const refundAmount = amount || Number(payment.amount) - Number(payment.refundedAmount);
 
     if (payment.paymentMethod === 'PAYMEE' && payment.gatewayPaymentId) {
+      await this.paymeeService.refund(payment.gatewayPaymentId, refundAmount);
     } else if (payment.paymentMethod === 'STRIPE' && payment.gatewayPaymentId) {
+      await this.stripeService.refund(payment.gatewayPaymentId, refundAmount);
     }
 
     await this.prisma.payment.update({

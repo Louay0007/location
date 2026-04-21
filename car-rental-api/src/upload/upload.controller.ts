@@ -1,8 +1,9 @@
 import {
-  Controller, Post, Body, UseGuards, UseInterceptors, UploadedFiles,
+  Controller, Post, Body, Param, UseGuards, UseInterceptors, UploadedFiles,
 } from '@nestjs/common';
 import { FileFieldsInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
+import { VehiclesService } from '../vehicles/vehicles.service';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -13,7 +14,10 @@ import { ApiBody } from '@nestjs/swagger';
 @ApiBearerAuth()
 @Controller('upload')
 export class UploadController {
-  constructor(private uploadService: UploadService) {}
+  constructor(
+    private uploadService: UploadService,
+    private vehiclesService: VehiclesService,
+  ) {}
 
   @Post('image')
   @UseGuards(JwtAuthGuard)
@@ -65,12 +69,14 @@ export class UploadController {
   ]))
   @ApiConsumes('multipart/form-data')
   async uploadVehicleImage(
+    @Param('id') id: string,
     @UploadedFiles() files: { file?: Express.Multer.File[] },
   ) {
     if (!files.file || !files.file[0]) {
       return { error: 'Aucun fichier fourni' };
     }
     const url = await this.uploadService.uploadImage(files.file[0]);
+    await this.vehiclesService.addVehicleImage(parseInt(id), url);
     return { url };
   }
 }

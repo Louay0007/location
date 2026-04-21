@@ -22,16 +22,16 @@ export class NotificationsController {
     );
   }
 
-  @Patch(':id/read')
-  @UseGuards(JwtAuthGuard)
-  markAsRead(@CurrentUser() user: any, @Param('id') id: string) {
-    return this.notificationsService.markAsRead(parseInt(id), user.id);
-  }
-
   @Patch('read-all')
   @UseGuards(JwtAuthGuard)
   markAllAsRead(@CurrentUser() user: any) {
     return this.notificationsService.markAllAsRead(user.id);
+  }
+
+  @Patch(':id/read')
+  @UseGuards(JwtAuthGuard)
+  markAsRead(@CurrentUser() user: any, @Param('id') id: string) {
+    return this.notificationsService.markAsRead(parseInt(id), user.id);
   }
 
   @Get('unread-count')
