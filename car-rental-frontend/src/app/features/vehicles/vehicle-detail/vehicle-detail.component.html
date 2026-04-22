@@ -1,0 +1,88 @@
+<div class="vehicle-detail-page">
+  @if (isLoading() || !vehicle()) {
+    <div class="loading-container">
+      <div class="skeleton-hero"></div>
+      <div class="skeleton-content">
+        <div class="skeleton-title"></div>
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+      </div>
+    </div>
+  } @else {
+    <div class="detail-container">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <button class="breadcrumb-link" (click)="goBack()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Retour
+        </button>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">{{ vehicle()!.brand }} {{ vehicle()!.model }}</span>
+      </nav>
+
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <div class="vehicle-info">
+            <div class="vehicle-category">{{ getCategoryLabel(vehicle()!.category) }}</div>
+            <h1 class="vehicle-title">{{ vehicle()!.brand }} {{ vehicle()!.model }}</h1>
+            <p class="vehicle-subtitle">{{ vehicle()!.year }} · {{ vehicle()!.seats }} places · {{ vehicle()!.doors }} portes</p>
+            <div class="vehicle-price">
+              <span class="price-amount">{{ formatPrice(vehicle()!.dailyRate) }}</span>
+              <span class="price-period">/ jour</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gallery -->
+      <section class="gallery-section">
+        <app-vehicle-gallery [vehicle]="vehicle()!"></app-vehicle-gallery>
+      </section>
+
+      <!-- Specs -->
+      <section class="specs-section">
+        <app-vehicle-specs [vehicle]="vehicle()!"></app-vehicle-specs>
+      </section>
+
+      <!-- Availability Calendar -->
+      <section class="calendar-section">
+        <h2 class="section-title">Disponibilités</h2>
+        <app-vehicle-calendar
+          [vehicleId]="vehicle()!.id"
+          (datesSelected)="onDatesSelected($event)"
+        ></app-vehicle-calendar>
+      </section>
+
+      <!-- Booking Form -->
+      @if (showBookingForm() && selectedDates()) {
+        <section class="booking-section">
+          <h2 class="section-title">Réserver</h2>
+          <app-booking-form
+            [vehicle]="vehicle()!"
+            [dates]="selectedDates()!"
+            (bookingSuccess)="onBookingSuccess($event)"
+          ></app-booking-form>
+        </section>
+      } @else if (!showBookingForm()) {
+        <section class="cta-section">
+          <button class="btn btn-primary btn-large" (click)="onBookNow()">
+            Réserver maintenant
+          </button>
+        </section>
+      }
+
+      <!-- Related Vehicles -->
+      @if (relatedVehicles().length > 0) {
+        <section class="related-section">
+          <h2 class="section-title">Véhicules similaires</h2>
+          <div class="related-grid">
+            @for (v of relatedVehicles(); track v.id) {
+              <app-vehicle-card [vehicle]="v" [compact]="true" (click)="onVehicleClick(v)"></app-vehicle-card>
+            }
+          </div>
+        </section>
+      }
+    </div>
+  }
+</div>

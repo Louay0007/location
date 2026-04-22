@@ -64,10 +64,10 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .verify__card {
-      background: var(--color-dark-surface-1);
+      background: var(--bg-surface);
       border-radius: var(--radius-large);
       padding: var(--space-12) var(--space-10);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
       text-align: center;
     }
 
@@ -94,7 +94,7 @@ import { AuthService } from '../../core/services/auth.service';
     .verify__loading-text {
       font-family: var(--font-body);
       font-size: var(--text-caption);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
     }
 
     .verify__result {
@@ -108,7 +108,7 @@ import { AuthService } from '../../core/services/auth.service';
       width: 64px;
       height: 64px;
       border-radius: var(--radius-large);
-      background: linear-gradient(135deg, #0a0e1a 0%, #0d1b2a 100%);
+      background: var(--bg-secondary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -132,14 +132,14 @@ import { AuthService } from '../../core/services/auth.service';
       font-family: var(--font-display);
       font-size: 1.75rem;
       font-weight: var(--weight-semibold);
-      color: var(--color-white);
+      color: var(--text-primary);
       letter-spacing: var(--tracking-tight);
     }
 
     .verify__subtitle {
       font-family: var(--font-body);
       font-size: var(--text-caption);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
       max-width: 360px;
       margin: 0 auto;
       line-height: var(--leading-caption);
@@ -151,7 +151,7 @@ import { AuthService } from '../../core/services/auth.service';
       justify-content: center;
       padding: var(--space-3) var(--space-8);
       background: var(--color-apple-blue);
-      color: var(--color-white);
+      color: var(--bg-primary);
       border: none;
       border-radius: var(--radius-pill);
       font-family: var(--font-body);
@@ -170,12 +170,13 @@ import { AuthService } from '../../core/services/auth.service';
 
     .verify__btn--secondary {
       background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
     }
 
     .verify__btn--secondary:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.4);
+      background: var(--hover-bg);
+      border-color: var(--border-color);
     }
 
     @media (max-width: 480px) {

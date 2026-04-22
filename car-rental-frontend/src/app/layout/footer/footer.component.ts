@@ -68,9 +68,10 @@ import { RouterModule } from '@angular/router';
   `,
   styles: [`
     .footer {
-      background: var(--color-pure-black);
+      background: var(--bg-primary);
       padding: var(--space-20) var(--space-6) var(--space-10);
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-top: 1px solid var(--border-subtle);
+      transition: background-color 0.3s ease;
     }
 
     .footer__container {
@@ -96,7 +97,7 @@ import { RouterModule } from '@angular/router';
       font-family: var(--font-display);
       font-size: 1.25rem;
       font-weight: var(--weight-semibold);
-      color: var(--color-white);
+      color: var(--text-primary);
       text-decoration: none;
       margin-bottom: var(--space-6);
       transition: opacity var(--duration-fast) var(--ease-default);
@@ -117,7 +118,7 @@ import { RouterModule } from '@angular/router';
       font-family: var(--font-body);
       font-size: var(--text-caption);
       line-height: 1.6;
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
       letter-spacing: -0.01em;
     }
 
@@ -125,7 +126,7 @@ import { RouterModule } from '@angular/router';
       font-family: var(--font-display);
       font-size: 0.8125rem;
       font-weight: var(--weight-semibold);
-      color: var(--color-white);
+      color: var(--text-primary);
       margin-bottom: var(--space-6);
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -140,13 +141,13 @@ import { RouterModule } from '@angular/router';
     .footer__link {
       font-family: var(--font-body);
       font-size: 0.875rem;
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
       text-decoration: none;
       transition: color var(--duration-fast) var(--ease-default);
     }
 
     .footer__link:hover {
-      color: var(--color-white);
+      color: var(--text-primary);
     }
 
     .footer__contact {
@@ -157,17 +158,17 @@ import { RouterModule } from '@angular/router';
 
     .footer__text {
       font-size: 0.875rem;
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
     }
 
     .footer__bottom {
       padding-top: var(--space-10);
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-top: 1px solid var(--border-subtle);
     }
 
     .footer__copyright {
       font-size: var(--text-micro);
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
       text-align: center;
       letter-spacing: 0.02em;
     }

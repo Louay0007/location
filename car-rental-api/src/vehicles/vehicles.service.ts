@@ -140,6 +140,24 @@ export class VehiclesService {
     return ['ECONOMY', 'COMPACT', 'SEDAN', 'SUV', 'LUXURY', 'VAN'];
   }
 
+  async getCategoryCounts() {
+    const counts = await this.prisma.vehicle.groupBy({
+      by: ['category'],
+      where: { isVisible: true },
+      _count: { category: true },
+    });
+    return counts.map(c => ({ category: c.category, count: c._count.category }));
+  }
+
+  async getFleetStats() {
+    const [vehicleCount, bookingCount, clientCount] = await Promise.all([
+      this.prisma.vehicle.count({ where: { isVisible: true } }),
+      this.prisma.booking.count(),
+      this.prisma.user.count({ where: { role: 'CLIENT' } }),
+    ]);
+    return { vehicleCount, bookingCount, clientCount };
+  }
+
   async addVehicleImage(vehicleId: number, imageUrl: string, altText?: string) {
     const lastImage = await this.prisma.vehicleImage.findFirst({
       where: { vehicleId },

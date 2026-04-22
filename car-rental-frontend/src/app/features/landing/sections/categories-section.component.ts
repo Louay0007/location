@@ -2,9 +2,10 @@
 // CATEGORIES SECTION — Apple-Style Category Showcase (Dark Background)
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { VehiclesService } from '../../../core/services/vehicles.service';
 
 interface VehicleCategory {
   icon: string;
@@ -61,9 +62,10 @@ interface VehicleCategory {
   `,
   styles: [`
     .categories {
-      background: var(--color-pure-black);
+      background: var(--bg-primary);
       padding: var(--space-24) var(--space-6);
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-top: 1px solid var(--border-subtle);
+      transition: background-color 0.3s ease;
     }
 
     .categories__header {
@@ -76,7 +78,7 @@ interface VehicleCategory {
       font-size: var(--text-section);
       font-weight: var(--weight-semibold);
       line-height: var(--leading-section);
-      color: var(--color-white);
+      color: var(--text-primary);
       margin-bottom: var(--space-4);
       letter-spacing: var(--tracking-tight);
     }
@@ -85,7 +87,7 @@ interface VehicleCategory {
       font-family: var(--font-body);
       font-size: var(--text-body);
       line-height: var(--leading-body);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
       max-width: 560px;
       margin: 0 auto;
     }
@@ -113,12 +115,17 @@ interface VehicleCategory {
     .category-card {
       display: flex;
       flex-direction: column;
-      background: var(--color-dark-surface-1);
+      background: var(--bg-elevated);
       border-radius: var(--radius-large);
       overflow: hidden;
       text-decoration: none;
       transition: transform var(--duration-normal) var(--ease-default),
                   box-shadow var(--duration-normal) var(--ease-default);
+    }
+
+    :host-context([data-theme="light"]) .category-card {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .category-card:hover {
@@ -142,6 +149,15 @@ interface VehicleCategory {
       background: linear-gradient(135deg, #0a0e1a 0%, #0d1b2a 100%);
     }
 
+    :host-context([data-theme="light"]) .category-card__visual--blue,
+    :host-context([data-theme="light"]) .category-card__visual--purple,
+    :host-context([data-theme="light"]) .category-card__visual--green,
+    :host-context([data-theme="light"]) .category-card__visual--orange,
+    :host-context([data-theme="light"]) .category-card__visual--gold,
+    :host-context([data-theme="light"]) .category-card__visual--teal {
+      background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);
+    }
+
     .category-card__icon-ring {
       width: 64px;
       height: 64px;
@@ -150,7 +166,11 @@ interface VehicleCategory {
       align-items: center;
       justify-content: center;
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+    }
+
+    :host-context([data-theme="light"]) .category-card__icon-ring {
+      background: rgba(0, 0, 0, 0.03);
     }
 
     .category-card__icon ::ng-deep svg {
@@ -168,6 +188,11 @@ interface VehicleCategory {
     .category-card__content {
       flex: 1;
       padding: var(--space-6) var(--space-8) var(--space-8);
+      background: var(--bg-elevated);
+    }
+
+    :host-context([data-theme="light"]) .category-card__content {
+      background: #ffffff;
     }
 
     .category-card__title {
@@ -175,7 +200,7 @@ interface VehicleCategory {
       font-size: 1.125rem;
       font-weight: var(--weight-semibold);
       line-height: 1.3;
-      color: var(--color-white);
+      color: var(--text-primary);
       margin-bottom: var(--space-2);
       letter-spacing: var(--tracking-tile);
     }
@@ -184,7 +209,7 @@ interface VehicleCategory {
       font-family: var(--font-body);
       font-size: var(--text-caption);
       line-height: var(--leading-caption);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
       margin-bottom: var(--space-6);
     }
 
@@ -201,8 +226,12 @@ interface VehicleCategory {
       border-radius: var(--radius-pill);
       font-size: var(--text-micro);
       font-weight: var(--weight-medium);
-      color: var(--color-text-white-tertiary);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-tertiary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    :host-context([data-theme="light"]) .category-card__count {
+      background: rgba(0, 0, 0, 0.03);
     }
 
     .category-card__cta {
@@ -301,14 +330,19 @@ interface VehicleCategory {
     }
   `]
 })
-export class CategoriesSectionComponent {
+export class CategoriesSectionComponent implements OnInit {
+  private readonly vehiclesService = inject(VehiclesService);
+
+  private readonly _categoryCounts = signal<Record<string, number>>({});
+  readonly categoryCounts = this._categoryCounts.asReadonly();
+
   categories: VehicleCategory[] = [
     { 
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>', 
       label: 'Économique', 
       value: 'ECONOMY', 
       description: 'Efficacité et agilité pour vos déplacements urbains quotidiens.', 
-      count: 12,
+      count: 0,
       accent: 'blue'
     },
     { 
@@ -316,7 +350,7 @@ export class CategoriesSectionComponent {
       label: 'Compacte', 
       value: 'COMPACT', 
       description: 'L\'équilibre parfait entre confort et compacité pour la ville.', 
-      count: 10,
+      count: 0,
       accent: 'purple'
     },
     { 
@@ -324,7 +358,7 @@ export class CategoriesSectionComponent {
       label: 'Berline', 
       value: 'SEDAN', 
       description: 'Élégance et raffinement pour vos trajets professionnels ou personnels.', 
-      count: 8,
+      count: 0,
       accent: 'green'
     },
     { 
@@ -332,7 +366,7 @@ export class CategoriesSectionComponent {
       label: 'SUV', 
       value: 'SUV', 
       description: 'Puissance et espace généreux pour toutes vos aventures en famille.', 
-      count: 10,
+      count: 0,
       accent: 'orange'
     },
     { 
@@ -340,7 +374,7 @@ export class CategoriesSectionComponent {
       label: 'Luxe', 
       value: 'LUXURY', 
       description: 'Le summum du prestige automobile pour une expérience inoubliable.', 
-      count: 5,
+      count: 0,
       accent: 'gold'
     },
     { 
@@ -348,9 +382,27 @@ export class CategoriesSectionComponent {
       label: 'Van', 
       value: 'VAN', 
       description: 'Capacité et modularité pour vos déplacements en groupe sans compromis.', 
-      count: 5,
+      count: 0,
       accent: 'teal'
     }
   ];
+
+  ngOnInit(): void {
+    this.vehiclesService.getCategoryCounts().subscribe({
+      next: (counts) => {
+        const countMap: Record<string, number> = {};
+        counts.forEach(c => countMap[c.category] = c.count);
+        this._categoryCounts.set(countMap);
+        // Update categories with real counts
+        this.categories = this.categories.map(cat => ({
+          ...cat,
+          count: countMap[cat.value] ?? 0
+        }));
+      },
+      error: () => {
+        // Fallback: keep default counts of 0
+      }
+    });
+  }
 }
 

@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { ThemeService } from '../../core/services/theme.service';
 
 @Component({
   selector: 'app-nav',
@@ -44,6 +45,27 @@ import { AuthService } from '../../core/services/auth.service';
 
         <!-- Desktop Actions -->
         <div class="nav__actions">
+          <!-- Theme Toggle -->
+          <button class="nav__theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDarkMode() ? 'Switch to light mode' : 'Switch to dark mode'">
+            @if (isDarkMode()) {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+            } @else {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+            }
+          </button>
+
           @if (isAuthenticated()) {
             <a routerLink="/my-bookings" class="nav__action nav__action--secondary">
               Mes réservations
@@ -176,12 +198,21 @@ import { AuthService } from '../../core/services/auth.service';
       background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid var(--border-subtle);
       transition: background var(--duration-normal) var(--ease-default);
     }
 
     .nav--scrolled {
       background: rgba(0, 0, 0, 0.95);
+    }
+
+    :host-context([data-theme="light"]) .nav {
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    :host-context([data-theme="light"]) .nav--scrolled {
+      background: #ffffff;
     }
 
     .nav__container {
@@ -203,6 +234,10 @@ import { AuthService } from '../../core/services/auth.service';
       font-weight: var(--weight-semibold);
       font-size: 1.25rem;
       transition: opacity var(--duration-fast) var(--ease-default);
+    }
+
+    :host-context([data-theme="light"]) .nav__logo {
+      color: var(--color-near-black);
     }
 
     .nav__logo:hover {
@@ -240,9 +275,18 @@ import { AuthService } from '../../core/services/auth.service';
       letter-spacing: -0.01em;
     }
 
+    :host-context([data-theme="light"]) .nav__link {
+      color: rgba(0, 0, 0, 0.7);
+    }
+
     .nav__link:hover,
     .nav__link.active {
       color: var(--color-white);
+    }
+
+    :host-context([data-theme="light"]) .nav__link:hover,
+    :host-context([data-theme="light"]) .nav__link.active {
+      color: var(--color-near-black);
     }
 
     .nav__actions {
@@ -271,8 +315,16 @@ import { AuthService } from '../../core/services/auth.service';
       background: transparent;
     }
 
+    :host-context([data-theme="light"]) .nav__action--secondary {
+      color: var(--color-near-black);
+    }
+
     .nav__action--secondary:hover {
       background: rgba(255, 255, 255, 0.08);
+    }
+
+    :host-context([data-theme="light"]) .nav__action--secondary:hover {
+      background: rgba(0, 0, 0, 0.05);
     }
 
     .nav__action--primary {
@@ -281,7 +333,7 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .nav__action--primary:hover {
-      background: #0077ed;
+      background: var(--color-apple-blue-hover);
     }
 
     .nav__user {
@@ -301,8 +353,16 @@ import { AuthService } from '../../core/services/auth.service';
       transition: background var(--duration-fast) var(--ease-default);
     }
 
+    :host-context([data-theme="light"]) .nav__user-btn {
+      color: var(--color-near-black);
+    }
+
     .nav__user-btn:hover {
       background: rgba(255, 255, 255, 0.08);
+    }
+
+    :host-context([data-theme="light"]) .nav__user-btn:hover {
+      background: rgba(0, 0, 0, 0.05);
     }
 
     .nav__user-avatar {
@@ -314,7 +374,12 @@ import { AuthService } from '../../core/services/auth.service';
       background: var(--color-dark-surface-2);
       border-radius: var(--radius-circle);
       color: var(--color-apple-blue);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-subtle);
+    }
+
+    :host-context([data-theme="light"]) .nav__user-avatar {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .nav__user-avatar svg {
@@ -349,8 +414,14 @@ import { AuthService } from '../../core/services/auth.service';
       border-radius: var(--radius-large);
       box-shadow: 0 20px 40px rgba(0,0,0,0.4);
       padding: var(--space-2);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-subtle);
       animation: fadeInScale var(--duration-fast) var(--ease-out);
+    }
+
+    :host-context([data-theme="light"]) .nav__user-menu {
+      background: var(--bg-elevated);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
     }
 
     @keyframes fadeInScale {
@@ -375,9 +446,18 @@ import { AuthService } from '../../core/services/auth.service';
       transition: all var(--duration-fast) var(--ease-default);
     }
 
+    :host-context([data-theme="light"]) .nav__user-menu-item {
+      color: var(--text-primary);
+    }
+
     .nav__user-menu-item:hover {
       background: rgba(255, 255, 255, 0.05);
       color: var(--color-white);
+    }
+
+    :host-context([data-theme="light"]) .nav__user-menu-item:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: var(--color-near-black);
     }
 
     .nav__user-menu-item svg {
@@ -392,7 +472,7 @@ import { AuthService } from '../../core/services/auth.service';
 
     .nav__user-menu-divider {
       border: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid var(--border-subtle);
       margin: var(--space-2);
     }
 
@@ -406,6 +486,10 @@ import { AuthService } from '../../core/services/auth.service';
       border: none;
       color: var(--color-white);
       cursor: pointer;
+    }
+
+    :host-context([data-theme="light"]) .nav__mobile-toggle {
+      color: var(--color-near-black);
     }
 
     @media (min-width: 768px) {
@@ -430,6 +514,10 @@ import { AuthService } from '../../core/services/auth.service';
       animation: slideDown var(--duration-normal) var(--ease-out);
     }
 
+    :host-context([data-theme="light"]) .nav__mobile-menu {
+      background: var(--bg-primary);
+    }
+
     @keyframes slideDown {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -449,14 +537,49 @@ import { AuthService } from '../../core/services/auth.service';
       cursor: pointer;
     }
 
+    :host-context([data-theme="light"]) .nav__mobile-link {
+      color: var(--color-near-black);
+    }
+
     .nav__mobile-link--primary {
       color: var(--color-apple-blue);
     }
 
     .nav__mobile-divider {
       border: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid var(--border-subtle);
       margin: var(--space-4) 0;
+    }
+
+    .nav__theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      color: var(--color-white);
+      cursor: pointer;
+      border-radius: var(--radius-circle);
+      transition: background var(--duration-fast) var(--ease-default);
+    }
+
+    :host-context([data-theme="light"]) .nav__theme-toggle {
+      color: var(--color-near-black);
+    }
+
+    .nav__theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    :host-context([data-theme="light"]) .nav__theme-toggle:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .nav__theme-toggle svg {
+      width: 20px;
+      height: 20px;
     }
   `]
 })
@@ -464,12 +587,14 @@ export class NavComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly themeService = inject(ThemeService);
 
   private readonly isBrowser = isPlatformBrowser(this.platformId);
 
   isScrolled = signal(false);
   isMobileMenuOpen = signal(false);
   isUserMenuOpen = signal(false);
+  isDarkMode = this.themeService.isDarkMode;
 
   isAuthenticated = this.authService.isAuthenticated;
   isAdmin = this.authService.isAdmin;
@@ -526,6 +651,10 @@ export class NavComponent implements OnInit, OnDestroy {
     this.authService.logout().subscribe();
     this.isUserMenuOpen.set(false);
     this.closeMobileMenu();
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
   }
 
   private handleOutsideClick(event: Event): void {

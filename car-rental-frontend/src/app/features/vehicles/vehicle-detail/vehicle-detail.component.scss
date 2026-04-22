@@ -1,0 +1,264 @@
+// ═════════════════════════════════════════════════════════════════════════════════════════
+// Vehicle Detail Component — Apple-inspired Design
+// ═════════════════════════════════════════════════════════════════════════════════════════
+
+.vehicle-detail-page {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  --color-black: var(--text-primary);
+  --color-light-gray: var(--bg-secondary);
+  --color-near-black: var(--text-primary);
+  --color-apple-blue: var(--color-apple-blue);
+  --color-white: var(--bg-primary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --max-content-width: 980px;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  --font-text: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.loading-container {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.skeleton-hero {
+  height: 400px;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-content {
+  background-color: var(--color-white);
+  border-radius: 8px;
+  padding: 32px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-title {
+  height: 40px;
+  background-color: var(--color-light-gray);
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.skeleton-text {
+  height: 16px;
+  background-color: var(--color-light-gray);
+  border-radius: 4px;
+  margin-bottom: 12px;
+  width: 80%;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.detail-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+// Breadcrumb
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0;
+  margin-bottom: 24px;
+}
+
+.breadcrumb-link {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-apple-blue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.breadcrumb-separator {
+  font-family: var(--font-text);
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.breadcrumb-current {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+// Hero Section
+.hero-section {
+  background-color: var(--color-white);
+  padding: 48px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+.vehicle-category {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-apple-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.vehicle-title {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 1.07;
+  letter-spacing: -0.016em;
+  color: var(--color-near-black);
+  margin: 0 0 12px 0;
+}
+
+.vehicle-subtitle {
+  font-family: var(--font-text);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.47;
+  letter-spacing: -0.022em;
+  color: var(--color-text-primary);
+  margin: 0 0 24px 0;
+}
+
+.vehicle-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.price-amount {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--color-near-black);
+}
+
+.price-period {
+  font-family: var(--font-text);
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+// Sections
+.gallery-section,
+.specs-section,
+.calendar-section,
+.booking-section,
+.cta-section {
+  background-color: var(--color-white);
+  padding: 48px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  color: var(--color-near-black);
+  margin: 0 0 32px 0;
+}
+
+// Buttons
+.btn {
+  font-family: var(--font-text);
+  font-size: 17px;
+  font-weight: 400;
+  padding: 8px 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-apple-blue);
+  color: var(--color-white);
+
+  &:hover {
+    background-color: var(--color-apple-blue-hover);
+  }
+}
+
+.btn-large {
+  padding: 12px 24px;
+  font-size: 18px;
+}
+
+.cta-section {
+  text-align: center;
+}
+
+.related-section {
+  padding: 48px 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+  width: 100%;
+  align-items: stretch;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .detail-container {
+    padding: 24px 16px;
+  }
+
+  .hero-section,
+  .gallery-section,
+  .specs-section,
+  .calendar-section,
+  .booking-section {
+    padding: 32px 24px;
+  }
+
+  .vehicle-title {
+    font-size: 40px;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+}

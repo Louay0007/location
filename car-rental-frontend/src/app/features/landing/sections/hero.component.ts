@@ -7,17 +7,20 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { VehiclesService } from '../../../core/services/vehicles.service';
-import { VehicleCategory } from '../../../core/models';
+import { Vehicle, VehicleCategory } from '../../../core/models';
+import { VehicleCardComponent } from '../components/vehicle-card.component';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, VehicleCardComponent],
   template: `
     <section class="hero">
       <div class="hero__background">
         <div class="hero__gradient"></div>
       </div>
+
+      <div class="hero__shadow"></div>
 
       <div class="hero__container container">
         <div class="hero__content">
@@ -94,21 +97,33 @@ import { VehicleCategory } from '../../../core/models';
 
           <div class="hero__stats">
             <div class="hero__stat">
-              <span class="hero__stat-value">50+</span>
+              <span class="hero__stat-value">{{ fleetStats()?.vehicleCount ?? '—' }}+</span>
               <span class="hero__stat-label">Véhicules</span>
             </div>
             <div class="hero__stat-divider"></div>
             <div class="hero__stat">
-              <span class="hero__stat-value">2K+</span>
+              <span class="hero__stat-value">{{ fleetStats()?.clientCount ?? '—' }}+</span>
               <span class="hero__stat-label">Clients</span>
             </div>
             <div class="hero__stat-divider"></div>
             <div class="hero__stat">
-              <span class="hero__stat-value">10+</span>
-              <span class="hero__stat-label">Années</span>
+              <span class="hero__stat-value">{{ fleetStats()?.bookingCount ?? '—' }}+</span>
+              <span class="hero__stat-label">Réservations</span>
             </div>
           </div>
         </div>
+
+        <!-- Featured Vehicles -->
+        @if (featuredVehicles().length > 0) {
+          <div class="hero__featured">
+            <h3 class="hero__featured-title">Véhicules populaires</h3>
+            <div class="hero__featured-grid">
+              @for (vehicle of featuredVehicles(); track vehicle.id) {
+                <app-vehicle-card [vehicle]="vehicle" [compact]="true"></app-vehicle-card>
+              }
+            </div>
+          </div>
+        }
       </div>
     </section>
   `,
@@ -118,9 +133,10 @@ import { VehicleCategory } from '../../../core/models';
       min-height: 90vh;
       display: flex;
       align-items: center;
-      background: var(--color-pure-black);
+      background: var(--bg-primary);
       padding: var(--space-20) 0;
       overflow: hidden;
+      transition: background-color 0.3s ease;
     }
 
     .hero__background {
@@ -132,9 +148,20 @@ import { VehicleCategory } from '../../../core/models';
     .hero__gradient {
       position: absolute;
       inset: 0;
-      background: 
+      background:
         radial-gradient(circle at 80% 20%, rgba(0, 113, 227, 0.15), transparent 40%),
         radial-gradient(circle at 20% 80%, rgba(0, 113, 227, 0.1), transparent 40%);
+    }
+
+    .hero__shadow {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 200px;
+      background: linear-gradient(to bottom, transparent, var(--bg-primary));
+      z-index: 1;
+      pointer-events: none;
     }
 
     .hero__container {
@@ -154,20 +181,20 @@ import { VehicleCategory } from '../../../core/models';
       font-size: clamp(3rem, 8vw, 5rem);
       font-weight: var(--weight-bold);
       line-height: 1.05;
-      color: var(--color-white);
+      color: var(--text-primary);
       margin-bottom: var(--space-6);
       letter-spacing: -0.02em;
     }
 
     .hero__title span {
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
     }
 
     .hero__subtitle {
       font-family: var(--font-body);
       font-size: var(--text-subheading);
       line-height: var(--leading-body);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
       margin-bottom: var(--space-12);
       max-width: 600px;
       margin-left: auto;
@@ -182,12 +209,12 @@ import { VehicleCategory } from '../../../core/models';
     .search-form {
       display: flex;
       align-items: center;
-      background: var(--color-dark-surface-1);
+      background: var(--bg-elevated);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-radius: var(--radius-pill);
       padding: var(--space-2);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-modal);
       max-width: 900px;
       margin: 0 auto;
@@ -205,7 +232,7 @@ import { VehicleCategory } from '../../../core/models';
       font-size: var(--text-nano);
       font-weight: var(--weight-bold);
       text-transform: uppercase;
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
       letter-spacing: 0.05em;
       margin-bottom: var(--space-1);
     }
@@ -226,23 +253,34 @@ import { VehicleCategory } from '../../../core/models';
     .search-form__input {
       background: transparent;
       border: none;
-      color: var(--color-white);
+      color: var(--text-primary);
       font-family: var(--font-body);
       font-size: var(--text-body);
       width: 100%;
       outline: none;
       cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .search-form__input::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+
+    .search-form__input::-webkit-datetime-edit {
+      font-family: var(--font-body);
+      color: var(--text-primary);
     }
 
     .search-form__input option {
-      background: var(--color-dark-surface-1);
-      color: var(--color-white);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
     }
 
     .search-form__divider {
       width: 1px;
       height: 40px;
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--border-subtle);
     }
 
     .search-form__submit {
@@ -292,12 +330,12 @@ import { VehicleCategory } from '../../../core/models';
       font-family: var(--font-display);
       font-size: 1.75rem;
       font-weight: var(--weight-semibold);
-      color: var(--color-white);
+      color: var(--text-primary);
     }
 
     .hero__stat-label {
       font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.5);
+      color: var(--text-tertiary);
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
@@ -305,7 +343,7 @@ import { VehicleCategory } from '../../../core/models';
     .hero__stat-divider {
       width: 1px;
       height: 40px;
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--border-subtle);
     }
 
     @media (max-width: 768px) {
@@ -381,6 +419,41 @@ import { VehicleCategory } from '../../../core/models';
         gap: var(--space-4);
       }
     }
+
+    .hero__featured {
+      margin-top: var(--space-16);
+      width: 100%;
+    }
+
+    .hero__featured-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: var(--weight-semibold);
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: var(--space-8);
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .hero__featured-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      width: 100%;
+      align-items: stretch;
+    }
+
+    @media (max-width: 1024px) {
+      .hero__featured-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero__featured-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   `]
 })
 export class HeroComponent implements OnInit {
@@ -394,10 +467,28 @@ export class HeroComponent implements OnInit {
 
   isSearching = signal(false);
 
+  private readonly _fleetStats = signal<{ vehicleCount: number; bookingCount: number; clientCount: number } | null>(null);
+  readonly fleetStats = this._fleetStats.asReadonly();
+
+  private readonly _featuredVehicles = signal<Vehicle[]>([]);
+  readonly featuredVehicles = this._featuredVehicles.asReadonly();
+
   categories = this.vehiclesService.categories;
   minDate = this.getMinDate();
 
   ngOnInit(): void {
+    // Fetch fleet stats
+    this.vehiclesService.getFleetStats().subscribe({
+      next: (stats) => this._fleetStats.set(stats),
+      error: () => {} // Graceful fallback — stats remain null
+    });
+
+    // Fetch featured vehicles
+    this.vehiclesService.getFeaturedVehicles(3).subscribe({
+      next: (vehicles) => this._featuredVehicles.set(vehicles),
+      error: () => {} // Graceful fallback — no featured section shown
+    });
+
     // Set default dates
     const today = new Date();
     const tomorrow = new Date(today);

@@ -1,0 +1,53 @@
+<div class="vehicle-gallery" [class.fullscreen]="isFullscreen()" (keydown)="handleKeydown($event)" tabindex="0">
+  <!-- Main Image -->
+  <div class="main-image-container">
+    @if (currentImage) {
+      <img
+        [src]="currentImage.imageUrl"
+        [alt]="currentImage.altText || vehicle.brand + ' ' + vehicle.model"
+        class="main-image"
+        (click)="openFullscreen()"
+      />
+    }
+    
+    <!-- Navigation Arrows -->
+    @if (images().length > 1) {
+      <button class="nav-btn nav-btn-prev" (click)="previousImage()" aria-label="Image précédente">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="nav-btn nav-btn-next" (click)="nextImage()" aria-label="Image suivante">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    }
+  </div>
+
+  <!-- Thumbnails -->
+  @if (images().length > 1) {
+    <div class="thumbnails">
+      @for (img of images(); track img.id) {
+        <button
+          class="thumbnail"
+          [class.active]="img.sortOrder === selectedIndex()"
+          (click)="selectImage(img.sortOrder)"
+        >
+          <img [src]="img.imageUrl" [alt]="img.altText" />
+        </button>
+      }
+    </div>
+  }
+
+  <!-- Fullscreen Modal -->
+  @if (isFullscreen() && currentImage) {
+    <div class="fullscreen-overlay" (click)="closeFullscreen()">
+      <button class="close-btn" (click)="closeFullscreen()" aria-label="Fermer">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <img
+        [src]="currentImage.imageUrl"
+        [alt]="currentImage.altText"
+        class="fullscreen-image"
+        (click)="$event.stopPropagation()"
+      />
+    </div>
+  }
+</div>

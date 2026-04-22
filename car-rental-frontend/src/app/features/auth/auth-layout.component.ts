@@ -39,7 +39,7 @@ import { RouterModule } from '@angular/router';
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--color-pure-black);
+      background: var(--bg-primary);
       position: relative;
       overflow: hidden;
     }
@@ -72,7 +72,7 @@ import { RouterModule } from '@angular/router';
       justify-content: center;
       gap: var(--space-2);
       text-decoration: none;
-      color: var(--color-white);
+      color: var(--text-primary);
       margin-bottom: var(--space-10);
       transition: opacity var(--duration-fast) var(--ease-default);
     }
@@ -85,6 +85,10 @@ import { RouterModule } from '@angular/router';
       width: 32px;
       height: 32px;
       color: var(--color-apple-blue);
+    }
+
+    :host-context([data-theme="light"]) .auth-layout__gradient {
+      background: none;
     }
 
     .auth-layout__logo-text {

@@ -1,0 +1,334 @@
+// ═════════════════════════════════════════════════════════════════════════════════════════
+// Vehicle Filters Component — Apple-inspired Design
+// ═════════════════════════════════════════════════════════════════════════════════════════
+
+.filters-sidebar {
+  // Design System Variables
+  --color-black: var(--text-primary);
+  --color-light-gray: var(--bg-secondary);
+  --color-near-black: var(--text-primary);
+  --color-apple-blue: var(--color-apple-blue);
+  --color-white: var(--bg-primary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  --font-text: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+
+  background-color: var(--bg-primary);
+  border-radius: 0;
+  padding: 24px 20px;
+  transition: background-color 0.3s ease;
+}
+
+.filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.filters-title {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.19;
+  letter-spacing: 0.007em;
+  color: var(--color-near-black);
+  margin: 0;
+}
+
+.clear-btn {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-apple-blue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.filter-section {
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  border-radius: 6px;
+  margin: 0 -4px;
+  padding-left: 4px;
+  padding-right: 4px;
+
+  &:hover {
+    background-color: var(--hover-bg);
+  }
+
+  &:active {
+    background-color: var(--active-bg);
+  }
+}
+
+.section-title {
+  font-family: var(--font-text);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.24;
+  letter-spacing: -0.022em;
+  color: var(--color-near-black);
+}
+
+.section-chevron {
+  color: var(--color-text-secondary);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+
+  &.expanded {
+    transform: rotate(180deg);
+  }
+}
+
+// Drip dropdown container — always in DOM, height animated via CSS transition
+.section-body {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.45s cubic-bezier(0.34, 1.3, 0.64, 1),
+    opacity 0.3s ease;
+
+  &.open {
+    max-height: 600px;
+    opacity: 1;
+  }
+}
+
+.section-content {
+  padding: 16px 0;
+}
+
+// Category Grid
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+// Staggered drip-in for child items when section opens
+.section-body.open {
+  .category-chip,
+  .checkbox-item,
+  .price-input,
+  .range-slider,
+  .range-value,
+  .seats-range {
+    animation: drip-in 0.4s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  }
+
+  .category-chip:nth-child(1), .checkbox-item:nth-child(1) { animation-delay: 0.04s; }
+  .category-chip:nth-child(2), .checkbox-item:nth-child(2) { animation-delay: 0.08s; }
+  .category-chip:nth-child(3), .checkbox-item:nth-child(3) { animation-delay: 0.12s; }
+  .category-chip:nth-child(4), .checkbox-item:nth-child(4) { animation-delay: 0.16s; }
+  .category-chip:nth-child(5), .checkbox-item:nth-child(5) { animation-delay: 0.20s; }
+  .category-chip:nth-child(6), .checkbox-item:nth-child(6) { animation-delay: 0.24s; }
+
+  .price-input:nth-child(1) { animation-delay: 0.04s; }
+  .price-input:nth-child(2) { animation-delay: 0.08s; }
+  .range-slider { animation-delay: 0.12s; }
+  .range-value { animation-delay: 0.04s; }
+}
+
+@keyframes drip-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.96);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(2px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.category-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 12px;
+  background-color: var(--color-light-gray);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--hover-bg);
+  }
+
+  &.selected {
+    border-color: var(--color-apple-blue);
+    background-color: var(--hover-bg);
+  }
+}
+
+.category-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-near-black);
+  transition: color 0.2s ease;
+
+  .category-chip.selected & {
+    color: var(--color-apple-blue);
+  }
+}
+
+.category-label {
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+// Price Range
+.price-range {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.price-inputs {
+  display: flex;
+  gap: 12px;
+}
+
+.price-input {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-family: var(--font-text);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  input {
+    width: 100%;
+    padding: 8px 12px;
+    font-family: var(--font-text);
+    font-size: 14px;
+    color: var(--color-near-black);
+    background-color: var(--color-light-gray);
+    border: none;
+    border-radius: 8px;
+
+    &:focus {
+      outline: 2px solid var(--color-apple-blue);
+      outline-offset: -2px;
+    }
+  }
+}
+
+.range-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 2px;
+  outline: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--color-apple-blue);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  &::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--color-apple-blue);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+  }
+}
+
+// Checkbox List
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-apple-blue);
+  }
+
+  .checkbox-svg {
+    width: 18px;
+    height: 18px;
+    color: var(--color-near-black);
+    flex-shrink: 0;
+  }
+
+  .checkbox-label {
+    font-family: var(--font-text);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text-primary);
+  }
+}
+
+// Seats Range
+.seats-range {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.range-value {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+}

@@ -55,9 +55,10 @@ interface Step {
   `,
   styles: [`
     .how-it-works {
-      background: var(--color-pure-black);
+      background: var(--bg-primary);
       padding: var(--space-24) var(--space-6);
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-top: 1px solid var(--border-subtle);
+      transition: background-color 0.3s ease;
     }
 
     .how-it-works__header {
@@ -70,7 +71,7 @@ interface Step {
       font-size: var(--text-section);
       font-weight: var(--weight-semibold);
       line-height: var(--leading-section);
-      color: var(--color-white);
+      color: var(--text-primary);
       margin-bottom: var(--space-4);
       letter-spacing: var(--tracking-tight);
     }
@@ -79,7 +80,7 @@ interface Step {
       font-family: var(--font-body);
       font-size: var(--text-body);
       line-height: var(--leading-body);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
       max-width: 500px;
       margin: 0 auto;
     }
@@ -101,11 +102,16 @@ interface Step {
       text-align: center;
       max-width: 380px;
       position: relative;
-      background: var(--color-dark-surface-1);
+      background: var(--bg-elevated);
       border-radius: var(--radius-large);
       overflow: hidden;
       transition: transform var(--duration-normal) var(--ease-default),
                   box-shadow var(--duration-normal) var(--ease-default);
+    }
+
+    :host-context([data-theme="light"]) .step {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .step:hover {
@@ -128,6 +134,12 @@ interface Step {
       background: linear-gradient(135deg, #0a0e1a 0%, #0d1b2a 100%);
     }
 
+    :host-context([data-theme="light"]) .step__visual--blue,
+    :host-context([data-theme="light"]) .step__visual--purple,
+    :host-context([data-theme="light"]) .step__visual--green {
+      background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);
+    }
+
     .step__icon-ring {
       width: 72px;
       height: 72px;
@@ -136,7 +148,11 @@ interface Step {
       align-items: center;
       justify-content: center;
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+    }
+
+    :host-context([data-theme="light"]) .step__icon-ring {
+      background: rgba(0, 0, 0, 0.03);
     }
 
     .step__icon ::ng-deep svg {
@@ -159,8 +175,17 @@ interface Step {
       line-height: 1;
     }
 
+    :host-context([data-theme="light"]) .step__number {
+      color: rgba(0, 0, 0, 0.06);
+    }
+
     .step__content {
       padding: var(--space-8) var(--space-8) var(--space-10);
+      background: var(--bg-elevated);
+    }
+
+    :host-context([data-theme="light"]) .step__content {
+      background: #ffffff;
     }
 
     .step__title {
@@ -168,7 +193,7 @@ interface Step {
       font-size: 1.125rem;
       font-weight: var(--weight-semibold);
       line-height: 1.3;
-      color: var(--color-white);
+      color: var(--text-primary);
       margin-bottom: var(--space-3);
       letter-spacing: var(--tracking-tile);
     }
@@ -177,7 +202,7 @@ interface Step {
       font-family: var(--font-body);
       font-size: var(--text-caption);
       line-height: var(--leading-caption);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
       letter-spacing: var(--tracking-link);
     }
 
@@ -186,7 +211,7 @@ interface Step {
       right: -38px;
       top: 50%;
       transform: translateY(-50%);
-      color: rgba(255, 255, 255, 0.1);
+      color: var(--border-subtle);
       z-index: 1;
     }
 

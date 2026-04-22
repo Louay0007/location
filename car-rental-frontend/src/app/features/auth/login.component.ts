@@ -122,10 +122,10 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .login__card {
-      background: var(--color-dark-surface-1);
+      background: var(--bg-surface);
       border-radius: var(--radius-large);
       padding: var(--space-10);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
     }
 
     .login__header {
@@ -137,7 +137,7 @@ import { AuthService } from '../../core/services/auth.service';
       font-family: var(--font-display);
       font-size: 1.75rem;
       font-weight: var(--weight-semibold);
-      color: var(--color-white);
+      color: var(--text-primary);
       margin-bottom: var(--space-2);
       letter-spacing: var(--tracking-tight);
     }
@@ -145,7 +145,7 @@ import { AuthService } from '../../core/services/auth.service';
     .login__subtitle {
       font-family: var(--font-body);
       font-size: var(--text-caption);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
     }
 
     .login__alert {
@@ -160,8 +160,8 @@ import { AuthService } from '../../core/services/auth.service';
 
     .login__alert--error {
       background: rgba(255, 59, 48, 0.1);
-      color: #ff6b6b;
-      border: 1px solid rgba(255, 59, 48, 0.2);
+      color: var(--color-error);
+      border: 1px solid rgba(255, 59, 48, 0.25);
     }
 
     .login__alert svg {
@@ -187,7 +187,7 @@ import { AuthService } from '../../core/services/auth.service';
       font-size: var(--text-nano);
       font-weight: var(--weight-bold);
       text-transform: uppercase;
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
       letter-spacing: 0.05em;
     }
 
@@ -202,7 +202,7 @@ import { AuthService } from '../../core/services/auth.service';
       left: var(--space-4);
       width: 18px;
       height: 18px;
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
       pointer-events: none;
     }
 
@@ -210,10 +210,10 @@ import { AuthService } from '../../core/services/auth.service';
       width: 100%;
       padding: var(--space-3) var(--space-4);
       padding-left: var(--space-10);
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
       border-radius: var(--radius-comfortable);
-      color: var(--color-white);
+      color: var(--text-primary);
       font-family: var(--font-body);
       font-size: var(--text-body);
       outline: none;
@@ -222,12 +222,12 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .login__input::placeholder {
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
     }
 
     .login__input:focus {
       border-color: var(--color-apple-blue);
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--bg-secondary);
     }
 
     .login__input.ng-invalid.ng-touched {
@@ -239,7 +239,7 @@ import { AuthService } from '../../core/services/auth.service';
       right: var(--space-3);
       background: none;
       border: none;
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
       cursor: pointer;
       padding: var(--space-1);
       display: flex;
@@ -252,7 +252,7 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .login__toggle-password:hover {
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
     }
 
     .login__options {
@@ -276,7 +276,7 @@ import { AuthService } from '../../core/services/auth.service';
       width: 100%;
       padding: var(--space-3) var(--space-6);
       background: var(--color-apple-blue);
-      color: var(--color-white);
+      color: var(--bg-primary);
       border: none;
       border-radius: var(--radius-pill);
       font-family: var(--font-body);
@@ -327,12 +327,12 @@ import { AuthService } from '../../core/services/auth.service';
       content: '';
       flex: 1;
       height: 1px;
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--border-color);
     }
 
     .login__divider span {
       font-size: var(--text-micro);
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
@@ -341,7 +341,7 @@ import { AuthService } from '../../core/services/auth.service';
       text-align: center;
       font-family: var(--font-body);
       font-size: var(--text-caption);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
     }
 
     .login__register-link {

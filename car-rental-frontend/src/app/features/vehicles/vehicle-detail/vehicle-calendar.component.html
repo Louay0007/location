@@ -1,0 +1,68 @@
+<div class="vehicle-calendar">
+  <div class="calendar-header">
+    <button class="month-nav-btn" (click)="previousMonth()" aria-label="Mois précédent">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <h3 class="month-title">{{ getMonthName() | titlecase }}</h3>
+    <button class="month-nav-btn" (click)="nextMonth()" aria-label="Mois suivant">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <div class="calendar-legend">
+    <div class="legend-item">
+      <span class="legend-dot available"></span>
+      <span class="legend-label">Disponible</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-dot booked"></span>
+      <span class="legend-label">Réservé</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-dot maintenance"></span>
+      <span class="legend-label">Maintenance</span>
+    </div>
+  </div>
+
+  <div class="calendar-grid">
+    <div class="calendar-day-header">Dim</div>
+    <div class="calendar-day-header">Lun</div>
+    <div class="calendar-day-header">Mar</div>
+    <div class="calendar-day-header">Mer</div>
+    <div class="calendar-day-header">Jeu</div>
+    <div class="calendar-day-header">Ven</div>
+    <div class="calendar-day-header">Sam</div>
+
+    @for (day of getDaysInMonth(); track day.getTime()) {
+      <button
+        class="calendar-day"
+        [class]="getStatusClass(day)"
+        [class.other-month]="!isCurrentMonth(day)"
+        (click)="onDateClick(day)"
+        [disabled]="isPast(day) || isBooked(day) || isMaintenance(day)"
+      >
+        {{ day.getDate() }}
+      </button>
+    }
+  </div>
+
+  @if (selectedStartDate() || selectedEndDate()) {
+    <div class="calendar-footer">
+      <div class="selected-dates">
+        @if (selectedStartDate()) {
+          <span class="date-label">Début:</span>
+          <span class="date-value">{{ selectedStartDate() | date:'dd/MM/yyyy' }}</span>
+        }
+        @if (selectedEndDate()) {
+          <span class="date-label">Fin:</span>
+          <span class="date-value">{{ selectedEndDate() | date:'dd/MM/yyyy' }}</span>
+        }
+      </div>
+      @if (isSelectingRange()) {
+        <button class="btn btn-secondary" (click)="clearSelection()">
+          Annuler
+        </button>
+      }
+    </div>
+  }
+</div>

@@ -7,7 +7,6 @@ import { Observable, tap, map, switchMap, shareReplay } from 'rxjs';
 import { ApiService } from './api.service';
 import {
   Vehicle,
-  VehicleListResponse,
   VehicleFilters,
   VehicleImage,
   CreateBookingRequest,
@@ -61,7 +60,7 @@ export class VehiclesService {
   ];
 
   readonly fuelTypes: { value: FuelType; label: string; icon: string }[] = [
-    { value: 'PETROL', label: 'Essence', icon: '⛽' },
+    { value: 'ESSENCE', label: 'Essence', icon: '⛽' },
     { value: 'DIESEL', label: 'Diesel', icon: '⛽' },
     { value: 'HYBRID', label: 'Hybride', icon: '🔋' },
     { value: 'ELECTRIC', label: 'Électrique', icon: '⚡' }
@@ -89,20 +88,20 @@ export class VehiclesService {
   // Public Catalog Methods
   // ─────────────────────────────────────────────────────────────────────────
 
-  getVehicles(filters: VehicleFilters = {}): Observable<VehicleListResponse> {
+  getVehicles(filters: VehicleFilters = {}): Observable<Vehicle[]> {
     this._isLoading.set(true);
     this._filters.set(filters);
 
-    return this.api.get<VehicleListResponse>('/vehicles', filters).pipe(
+    return this.api.get<Vehicle[]>('/vehicles', filters).pipe(
       tap(response => {
-        const data = response.data;
-        this._vehicles.set(data.data);
-        this._totalCount.set(data.meta?.total ?? 0);
-        this._currentPage.set(data.meta?.page ?? 1);
-        this._totalPages.set(data.meta?.totalPages ?? 1);
+        const vehicles = Array.isArray(response.data) ? response.data : [];
+        this._vehicles.set(vehicles);
+        this._totalCount.set(response.meta?.total ?? vehicles.length);
+        this._currentPage.set(response.meta?.page ?? 1);
+        this._totalPages.set(response.meta?.totalPages ?? 1);
         this._isLoading.set(false);
       }),
-      map(response => response.data)
+      map(response => response.data as Vehicle[])
     );
   }
 
@@ -130,23 +129,27 @@ export class VehiclesService {
     );
   }
 
-  getCategories(): Observable<{ value: string; label: string }[]> {
-    return this.api.getRaw<{ value: string; label: string }[]>('/vehicles/categories');
+  getCategories(): Observable<string[]> {
+    return this.api.getRaw<string[]>('/vehicles/categories');
+  }
+
+  getCategoryCounts(): Observable<{ category: string; count: number }[]> {
+    return this.api.getRaw<{ category: string; count: number }[]>('/vehicles/categories/counts');
+  }
+
+  getFleetStats(): Observable<{ vehicleCount: number; bookingCount: number; clientCount: number }> {
+    return this.api.getRaw<{ vehicleCount: number; bookingCount: number; clientCount: number }>('/vehicles/fleet-stats');
   }
 
   getFeaturedVehicles(limit: number = 6): Observable<Vehicle[]> {
-    return this.api.getRaw<VehicleListResponse>(
+    return this.api.getRaw<Vehicle[]>(
       '/vehicles',
-      { limit, status: 'AVAILABLE', sort: 'popular' }
-    ).pipe(
-      map(response => response.data)
+      { limit, status: 'AVAILABLE' }
     );
   }
 
   getVehicleByCategory(category: VehicleCategory): Observable<Vehicle[]> {
-    return this.api.getRaw<Vehicle[]>('/vehicles', { category, limit: 12 }).pipe(
-      map(vehicles => vehicles)
-    );
+    return this.api.getRaw<Vehicle[]>('/vehicles', { category, limit: 12 });
   }
 
   getRelatedVehicles(vehicleId: number, limit: number = 4): Observable<Vehicle[]> {

@@ -37,10 +37,11 @@ import { RouterModule } from '@angular/router';
   styles: [`
     .cta {
       position: relative;
-      background: var(--color-pure-black);
+      background: var(--bg-primary);
       padding: var(--space-32) var(--space-6);
       overflow: hidden;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-top: 1px solid var(--border-subtle);
+      transition: background-color 0.3s ease;
     }
 
     .cta__background {
@@ -73,7 +74,7 @@ import { RouterModule } from '@angular/router';
       font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: var(--weight-bold);
       line-height: 1.1;
-      color: var(--color-white);
+      color: var(--text-primary);
       margin-bottom: var(--space-6);
       letter-spacing: -0.03em;
     }
@@ -82,7 +83,7 @@ import { RouterModule } from '@angular/router';
       font-family: var(--font-body);
       font-size: var(--text-subheading);
       line-height: var(--leading-body);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
       margin-bottom: var(--space-12);
       max-width: 600px;
       margin-left: auto;
@@ -116,7 +117,7 @@ import { RouterModule } from '@angular/router';
     }
 
     .cta__btn--primary:hover {
-      background: #0077ed;
+      background: var(--color-apple-blue-hover);
       transform: scale(1.02);
     }
 
@@ -132,13 +133,13 @@ import { RouterModule } from '@angular/router';
 
     .cta__btn--secondary {
       background: transparent;
-      color: var(--color-white);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
     }
 
     .cta__btn--secondary:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.4);
+      background: var(--hover-bg);
+      border-color: var(--border-color);
     }
 
     @media (max-width: 768px) {

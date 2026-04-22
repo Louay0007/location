@@ -1,0 +1,79 @@
+<div class="vehicle-specs">
+  <!-- Specs Grid -->
+  <div class="specs-grid">
+    @for (spec of specItems(); track spec.label) {
+      <div class="spec-item">
+        <svg class="spec-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          @switch (spec.icon) {
+            @case ('calendar') { <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/> }
+            @case ('users') { <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/> }
+            @case ('door') { <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16"/><path d="M9 12h6"/> }
+            @case ('settings') { <circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/> }
+            @case ('fuel') { <path d="M3 22V6l6-4 6 4v16"/><path d="M9 22V12"/><path d="M15 12h2a2 2 0 0 1 2 2v6"/> }
+            @case ('gauge') { <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 6v6l4 2"/> }
+            @case ('shield') { <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/> }
+          }
+        </svg>
+        <div class="spec-info">
+          <div class="spec-label">{{ spec.label }}</div>
+          <div class="spec-value">{{ spec.value }}</div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Features -->
+  <div class="features-section">
+    <h3 class="features-title">Équipements</h3>
+    
+    @if (featureGroups().comfort.length > 0) {
+      <div class="feature-group">
+        <h4 class="feature-group-title">Confort</h4>
+        <div class="feature-list">
+          @for (feature of featureGroups().comfort; track feature) {
+            <div class="feature-item">
+              <svg class="feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="feature-name">{{ feature }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (featureGroups().safety.length > 0) {
+      <div class="feature-group">
+        <h4 class="feature-group-title">Sécurité</h4>
+        <div class="feature-list">
+          @for (feature of featureGroups().safety; track feature) {
+            <div class="feature-item">
+              <svg class="feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="feature-name">{{ feature }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (featureGroups().technology.length > 0) {
+      <div class="feature-group">
+        <h4 class="feature-group-title">Technologie</h4>
+        <div class="feature-list">
+          @for (feature of featureGroups().technology; track feature) {
+            <div class="feature-item">
+              <svg class="feature-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="feature-name">{{ feature }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Description -->
+  @if (vehicle.description) {
+    <div class="description-section">
+      <h3 class="description-title">Description</h3>
+      <p class="description-text">{{ vehicle.description }}</p>
+    </div>
+  }
+</div>

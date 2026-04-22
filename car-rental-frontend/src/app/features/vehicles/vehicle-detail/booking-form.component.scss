@@ -1,0 +1,248 @@
+// ═════════════════════════════════════════════════════════════════════════════════════════
+// Booking Form Component — Apple-inspired Design
+// ═════════════════════════════════════════════════════════════════════════════════════════
+
+.booking-form {
+  --color-white: var(--bg-primary);
+  --color-light-gray: var(--bg-secondary);
+  --color-near-black: var(--text-primary);
+  --color-apple-blue: var(--color-apple-blue);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-error: var(--color-error);
+  --font-text: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+}
+
+.form-section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-family: var(--font-text);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-near-black);
+  margin: 0 0 16px 0;
+}
+
+// Date Info
+.date-info {
+  display: flex;
+  gap: 24px;
+  padding: 16px;
+  background-color: var(--color-light-gray);
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.date-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.date-label {
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.date-value {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-near-black);
+}
+
+// Form Row
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.form-input,
+.form-textarea {
+  font-family: var(--font-text);
+  font-size: 14px;
+  color: var(--color-near-black);
+  background-color: var(--color-light-gray);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: background-color 0.2s ease;
+
+  &::placeholder {
+    color: var(--color-text-secondary);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-apple-blue);
+    outline-offset: -2px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.error-message {
+  font-family: var(--font-text);
+  font-size: 12px;
+  color: var(--color-error);
+}
+
+// Price Summary
+.price-summary {
+  background-color: var(--color-light-gray);
+  padding: 24px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-subtle);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.discount {
+    color: var(--color-apple-blue);
+  }
+
+  &.total {
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 2px solid var(--border-color);
+  }
+}
+
+.price-label {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+}
+
+.price-value {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-near-black);
+}
+
+.price-row.total .price-value {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+// Form Actions
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn {
+  font-family: var(--font-text);
+  font-size: 17px;
+  font-weight: 400;
+  padding: 8px 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background-color: var(--color-apple-blue);
+  color: var(--color-white);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-apple-blue-hover);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-large {
+  padding: 12px 24px;
+  font-size: 18px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--color-white);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .date-info {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .price-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .form-actions {
+    justify-content: stretch;
+  }
+
+  .btn-large {
+    width: 100%;
+    justify-content: center;
+  }
+}

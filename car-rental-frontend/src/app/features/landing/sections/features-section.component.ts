@@ -46,8 +46,9 @@ interface Feature {
   `,
   styles: [`
     .features {
-      background: var(--color-pure-black);
+      background: var(--bg-primary);
       padding: var(--space-24) var(--space-6);
+      transition: background-color 0.3s ease;
     }
 
     .features__header {
@@ -60,7 +61,7 @@ interface Feature {
       font-size: var(--text-section);
       font-weight: var(--weight-semibold);
       line-height: var(--leading-section);
-      color: var(--color-white);
+      color: var(--text-primary);
       margin-bottom: var(--space-4);
       letter-spacing: var(--tracking-tight);
     }
@@ -69,7 +70,7 @@ interface Feature {
       font-family: var(--font-body);
       font-size: var(--text-body);
       line-height: var(--leading-body);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
       max-width: 500px;
       margin: 0 auto;
     }
@@ -95,11 +96,16 @@ interface Feature {
     }
 
     .feature-card {
-      background: var(--color-dark-surface-1);
+      background: var(--bg-elevated);
       border-radius: var(--radius-large);
       overflow: hidden;
       transition: transform var(--duration-normal) var(--ease-default),
                   box-shadow var(--duration-normal) var(--ease-default);
+    }
+
+    :host-context([data-theme="light"]) .feature-card {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .feature-card:hover {
@@ -125,6 +131,15 @@ interface Feature {
       background: linear-gradient(135deg, #0a0e1a 0%, #0d1b2a 100%);
     }
 
+    :host-context([data-theme="light"]) .feature-card__visual--blue,
+    :host-context([data-theme="light"]) .feature-card__visual--purple,
+    :host-context([data-theme="light"]) .feature-card__visual--green,
+    :host-context([data-theme="light"]) .feature-card__visual--orange,
+    :host-context([data-theme="light"]) .feature-card__visual--red,
+    :host-context([data-theme="light"]) .feature-card__visual--teal {
+      background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);
+    }
+
     .feature-card__icon-ring {
       width: 80px;
       height: 80px;
@@ -133,8 +148,12 @@ interface Feature {
       align-items: center;
       justify-content: center;
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
       backdrop-filter: blur(10px);
+    }
+
+    :host-context([data-theme="light"]) .feature-card__icon-ring {
+      background: rgba(0, 0, 0, 0.03);
     }
 
     .feature-card__icon ::ng-deep svg {
@@ -151,6 +170,11 @@ interface Feature {
 
     .feature-card__body {
       padding: var(--space-8) var(--space-8) var(--space-10);
+      background: var(--bg-elevated);
+    }
+
+    :host-context([data-theme="light"]) .feature-card__body {
+      background: #ffffff;
     }
 
     .feature-card__title {
@@ -158,7 +182,7 @@ interface Feature {
       font-size: 1.125rem;
       font-weight: var(--weight-semibold);
       line-height: 1.3;
-      color: var(--color-white);
+      color: var(--text-primary);
       margin-bottom: var(--space-3);
       letter-spacing: var(--tracking-tile);
     }
@@ -167,7 +191,7 @@ interface Feature {
       font-family: var(--font-body);
       font-size: var(--text-caption);
       line-height: var(--leading-caption);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
       letter-spacing: var(--tracking-link);
     }
 

@@ -133,10 +133,10 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .reset__card {
-      background: var(--color-dark-surface-1);
+      background: var(--bg-surface);
       border-radius: var(--radius-large);
       padding: var(--space-10);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
     }
 
     .reset__header,
@@ -149,7 +149,7 @@ import { AuthService } from '../../core/services/auth.service';
       width: 56px;
       height: 56px;
       border-radius: var(--radius-large);
-      background: linear-gradient(135deg, #0a0e1a 0%, #0d1b2a 100%);
+      background: var(--bg-secondary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -170,7 +170,7 @@ import { AuthService } from '../../core/services/auth.service';
       font-family: var(--font-display);
       font-size: 1.75rem;
       font-weight: var(--weight-semibold);
-      color: var(--color-white);
+      color: var(--text-primary);
       margin-bottom: var(--space-2);
       letter-spacing: var(--tracking-tight);
     }
@@ -178,7 +178,7 @@ import { AuthService } from '../../core/services/auth.service';
     .reset__subtitle {
       font-family: var(--font-body);
       font-size: var(--text-caption);
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
       max-width: 360px;
       margin: 0 auto;
       line-height: var(--leading-caption);
@@ -196,8 +196,8 @@ import { AuthService } from '../../core/services/auth.service';
 
     .reset__alert--error {
       background: rgba(255, 59, 48, 0.1);
-      color: #ff6b6b;
-      border: 1px solid rgba(255, 59, 48, 0.2);
+      color: var(--color-error);
+      border: 1px solid rgba(255, 59, 48, 0.25);
     }
 
     .reset__alert svg {
@@ -223,7 +223,7 @@ import { AuthService } from '../../core/services/auth.service';
       font-size: var(--text-nano);
       font-weight: var(--weight-bold);
       text-transform: uppercase;
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
       letter-spacing: 0.05em;
     }
 
@@ -238,7 +238,7 @@ import { AuthService } from '../../core/services/auth.service';
       left: var(--space-4);
       width: 18px;
       height: 18px;
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
       pointer-events: none;
     }
 
@@ -246,10 +246,10 @@ import { AuthService } from '../../core/services/auth.service';
       width: 100%;
       padding: var(--space-3) var(--space-4);
       padding-left: var(--space-10);
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
       border-radius: var(--radius-comfortable);
-      color: var(--color-white);
+      color: var(--text-primary);
       font-family: var(--font-body);
       font-size: var(--text-body);
       outline: none;
@@ -258,12 +258,12 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .reset__input::placeholder {
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
     }
 
     .reset__input:focus {
       border-color: var(--color-apple-blue);
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--bg-secondary);
     }
 
     .reset__toggle-password {
@@ -271,7 +271,7 @@ import { AuthService } from '../../core/services/auth.service';
       right: var(--space-3);
       background: none;
       border: none;
-      color: var(--color-text-white-tertiary);
+      color: var(--text-tertiary);
       cursor: pointer;
       padding: var(--space-1);
       display: flex;
@@ -284,7 +284,7 @@ import { AuthService } from '../../core/services/auth.service';
     }
 
     .reset__toggle-password:hover {
-      color: var(--color-text-white-secondary);
+      color: var(--text-secondary);
     }
 
     .reset__mismatch {
@@ -296,7 +296,7 @@ import { AuthService } from '../../core/services/auth.service';
       width: 100%;
       padding: var(--space-3) var(--space-6);
       background: var(--color-apple-blue);
-      color: var(--color-white);
+      color: var(--bg-primary);
       border: none;
       border-radius: var(--radius-pill);
       font-family: var(--font-body);

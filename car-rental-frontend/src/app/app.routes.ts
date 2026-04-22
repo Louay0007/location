@@ -7,9 +7,13 @@ import { ForgotPasswordComponent } from './features/auth/forgot-password.compone
 import { ResetPasswordComponent } from './features/auth/reset-password.component';
 import { VerifyEmailComponent } from './features/auth/verify-email.component';
 import { guestGuard } from './core/guards/auth.guard';
+import { VehicleListComponent } from './features/vehicles/vehicle-list/vehicle-list.component';
+import { VehicleDetailComponent } from './features/vehicles/vehicle-detail/vehicle-detail.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent, pathMatch: 'full' },
+  { path: 'vehicles', component: VehicleListComponent },
+  { path: 'vehicles/:id', component: VehicleDetailComponent },
   {
     path: 'auth',
     component: AuthLayoutComponent,

@@ -30,6 +30,18 @@ export class VehiclesController {
   }
 
   @Public()
+  @Get('categories/counts')
+  getCategoryCounts() {
+    return this.vehiclesService.getCategoryCounts();
+  }
+
+  @Public()
+  @Get('fleet-stats')
+  getFleetStats() {
+    return this.vehiclesService.getFleetStats();
+  }
+
+  @Public()
   @Get(':id')
   getVehicleById(@Param('id') id: string) {
     return this.vehiclesService.getVehicleById(parseInt(id));

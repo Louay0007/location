@@ -1,0 +1,226 @@
+// ═════════════════════════════════════════════════════════════════════════════════════════
+// Vehicle Calendar Component — Apple-inspired Design
+// ═════════════════════════════════════════════════════════════════════════════════════════
+
+.vehicle-calendar {
+  --color-white: var(--bg-primary);
+  --color-light-gray: var(--bg-secondary);
+  --color-black: var(--text-primary);
+  --color-near-black: var(--text-primary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-apple-blue: var(--color-apple-blue);
+  --color-error: var(--color-error);
+  --color-warning: var(--color-warning);
+  --color-success: var(--color-success);
+  --font-text: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.month-nav-btn {
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-light-gray);
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--hover-bg);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-apple-blue);
+    outline-offset: 2px;
+  }
+}
+
+.month-title {
+  font-family: var(--font-text);
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--color-near-black);
+  margin: 0;
+}
+
+.calendar-legend {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+
+  &.available {
+    background-color: var(--color-success);
+  }
+
+  &.booked {
+    background-color: var(--color-error);
+  }
+
+  &.maintenance {
+    background-color: var(--color-warning);
+  }
+}
+
+.legend-label {
+  font-family: var(--font-text);
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.calendar-day-header {
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  background-color: var(--color-light-gray);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--hover-bg);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-apple-blue);
+    outline-offset: -2px;
+  }
+
+  &.other-month {
+    color: var(--color-text-secondary);
+    background-color: var(--bg-surface);
+  }
+
+  &.past {
+    color: var(--color-text-secondary);
+    background-color: var(--bg-surface);
+    cursor: not-allowed;
+  }
+
+  &.booked {
+    background-color: rgba(255, 69, 58, 0.15);
+    border-color: var(--color-error);
+    cursor: not-allowed;
+  }
+
+  &.maintenance {
+    background-color: rgba(255, 159, 10, 0.15);
+    border-color: var(--color-warning);
+    cursor: not-allowed;
+  }
+
+  &.selected {
+    background-color: var(--color-apple-blue);
+    color: var(--color-white);
+    border-color: var(--color-apple-blue);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.calendar-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.selected-dates {
+  display: flex;
+  gap: 24px;
+}
+
+.date-label {
+  font-family: var(--font-text);
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.date-value {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-near-black);
+}
+
+.btn {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 400;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary {
+  background-color: var(--color-near-black);
+  color: var(--color-white);
+
+  &:hover {
+    background-color: var(--hover-bg);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .calendar-legend {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .calendar-grid {
+    gap: 4px;
+  }
+
+  .calendar-day {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,158 @@
+// ═════════════════════════════════════════════════════════════════════════════════════════
+// Vehicle Specs Component — Apple-inspired Design
+// ═════════════════════════════════════════════════════════════════════════════════════════
+
+.vehicle-specs {
+  --color-white: var(--bg-primary);
+  --color-light-gray: var(--bg-secondary);
+  --color-near-black: var(--text-primary);
+  --color-apple-blue: var(--color-apple-blue);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  --font-text: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.spec-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background-color: var(--color-light-gray);
+  border-radius: 8px;
+}
+
+.spec-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-apple-blue);
+  flex-shrink: 0;
+}
+
+.spec-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.spec-label {
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.spec-value {
+  font-family: var(--font-text);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-near-black);
+}
+
+// Features
+.features-section {
+  margin-bottom: 48px;
+}
+
+.features-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: 0.007em;
+  color: var(--color-near-black);
+  margin: 0 0 24px 0;
+}
+
+.feature-group {
+  margin-bottom: 32px;
+}
+
+.feature-group-title {
+  font-family: var(--font-text);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-near-black);
+  margin: 0 0 16px 0;
+}
+
+.feature-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: var(--color-light-gray);
+  border-radius: 6px;
+}
+
+.feature-check {
+  width: 16px;
+  height: 16px;
+  color: var(--color-apple-blue);
+  flex-shrink: 0;
+}
+
+.feature-name {
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+}
+
+// Description
+.description-section {
+  padding-top: 32px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.description-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: 0.007em;
+  color: var(--color-near-black);
+  margin: 0 0 16px 0;
+}
+
+.description-text {
+  font-family: var(--font-text);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.47;
+  letter-spacing: -0.022em;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .specs-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .feature-list {
+    grid-template-columns: 1fr;
+  }
+
+  .features-title,
+  .description-title {
+    font-size: 24px;
+  }
+}

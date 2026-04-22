@@ -1,0 +1,109 @@
+<div class="vehicle-list-page">
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">Notre Flotte</h1>
+      <p class="page-subtitle">Découvrez notre sélection de véhicules pour tous vos besoins</p>
+    </div>
+    <div class="header-stats">
+      <span class="stat">{{ totalCount() }} véhicules</span>
+    </div>
+  </div>
+
+  <div class="catalog-layout">
+    <!-- Sidebar Filters -->
+    <aside class="filters-sidebar">
+      <app-vehicle-filters
+        [inputFilters]="selectedFilters()"
+        [categories]="categories"
+        [fuelTypes]="fuelTypes"
+        [transmissions]="transmissions"
+        [activeFilterCount]="activeFilterCount()"
+        (filtersChange)="onFiltersChange($event)"
+        (clearFilters)="clearFilters()"
+      ></app-vehicle-filters>
+    </aside>
+
+    <!-- Vehicle Grid -->
+    <main class="vehicle-grid-section">
+      <!-- Loading State -->
+      @if (isLoading()) {
+        <div class="loading-grid">
+          @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+            <div class="skeleton-card"></div>
+          }
+        </div>
+      }
+
+      <!-- Error State -->
+      @if (!isLoading() && hasError()) {
+        <div class="error-state">
+          <svg class="error-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <h2 class="error-title">Erreur de chargement</h2>
+          <p class="error-description">Impossible de charger les véhicules. Vérifiez votre connexion.</p>
+          <button class="btn btn-primary" (click)="retryLoad()">
+            Réessayer
+          </button>
+        </div>
+      }
+
+      <!-- Empty State -->
+      @if (!isLoading() && !hasError() && vehicles().length === 0) {
+        <div class="empty-state">
+          <svg class="empty-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M5 17a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg>
+          <h2 class="empty-title">Aucun véhicule trouvé</h2>
+          <p class="empty-description">Essayez de modifier vos filtres de recherche</p>
+          <button class="btn btn-primary" (click)="clearFilters()">
+            Effacer les filtres
+          </button>
+        </div>
+      }
+
+      <!-- Vehicle Cards -->
+      @if (!isLoading() && !hasError() && vehicles().length > 0) {
+        <div class="vehicle-grid">
+          @for (vehicle of vehicles(); track vehicle.id) {
+            <app-vehicle-card
+              [vehicle]="vehicle"
+              (click)="onVehicleClick(vehicle)"
+            ></app-vehicle-card>
+          }
+        </div>
+
+        <!-- Pagination -->
+        @if (totalPages() > 1) {
+          <div class="pagination">
+            <button
+              class="pagination-btn"
+              [disabled]="!hasPreviousPage()"
+              (click)="previousPage()"
+              aria-label="Page précédente"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+
+            @for (page of [1, 2, 3, 4, 5]; track page) {
+              @if (page <= totalPages()) {
+                <button
+                  class="pagination-btn"
+                  [class.active]="page === currentPage()"
+                  (click)="goToPage(page)"
+                >
+                  {{ page }}
+                </button>
+              }
+            }
+
+            <button
+              class="pagination-btn"
+              [disabled]="!hasNextPage()"
+              (click)="nextPage()"
+              aria-label="Page suivante"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        }
+      }
+    </main>
+  </div>
+</div>

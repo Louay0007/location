@@ -63,7 +63,7 @@ export interface ProfileUpdateRequest {
 
 export type VehicleCategory = 'ECONOMY' | 'COMPACT' | 'SEDAN' | 'SUV' | 'LUXURY' | 'VAN';
 export type TransmissionType = 'MANUAL' | 'AUTOMATIC';
-export type FuelType = 'PETROL' | 'DIESEL' | 'HYBRID' | 'ELECTRIC';
+export type FuelType = 'ESSENCE' | 'DIESEL' | 'HYBRID' | 'ELECTRIC';
 export type VehicleStatus = 'AVAILABLE' | 'RENTED' | 'MAINTENANCE' | 'OUT_OF_SERVICE';
 
 export interface VehicleImage {
@@ -81,21 +81,23 @@ export interface Vehicle {
   model: string;
   year: number;
   category: VehicleCategory;
+  fuelType: FuelType;
   transmission: TransmissionType;
-  fuel: FuelType;
   seats: number;
   doors: number;
   color?: string;
   mileage: number;
   status: VehicleStatus;
-  dailyRate: number;
-  depositAmount: number;
+  dailyRate: number | string;
+  depositAmount: number | string;
   description?: string;
   features: string[];
   mainImageUrl?: string;
+  isVisible?: boolean;
   images?: VehicleImage[];
   averageRating?: number;
   reviewCount?: number;
+  _count?: { bookings: number };
   createdAt: string;
   updatedAt: string;
 }
@@ -115,7 +117,7 @@ export interface VehicleFilters {
   limit?: number;
   search?: string;
   category?: VehicleCategory;
-  fuel?: FuelType;
+  fuelType?: FuelType;
   transmission?: TransmissionType;
   minSeats?: number;
   maxSeats?: number;

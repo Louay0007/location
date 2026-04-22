@@ -67,7 +67,7 @@ export class BookingsService {
     limit?: number;
   }): Observable<BookingListResponse> {
     this._isLoading.set(true);
-    return this.api.get<BookingListResponse>('/bookings/my', filters).pipe(
+    return this.api.getRaw<BookingListResponse>('/bookings/my', filters).pipe(
       tap(response => {
         this._bookings.set(response.data);
         this._totalCount.set(response.meta.total);

@@ -113,6 +113,10 @@ import { Vehicle } from '../../../core/models';
       overflow: hidden;
       transition: transform var(--duration-normal) var(--ease-default),
                   box-shadow var(--duration-normal) var(--ease-default);
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
     .vehicle-card:hover {
@@ -121,7 +125,9 @@ import { Vehicle } from '../../../core/models';
     }
 
     .vehicle-card__link {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
       text-decoration: none;
       color: inherit;
     }
@@ -177,6 +183,9 @@ import { Vehicle } from '../../../core/models';
 
     .vehicle-card__content {
       padding: var(--space-5);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .vehicle-card__title {
@@ -236,16 +245,22 @@ import { Vehicle } from '../../../core/models';
 
     .vehicle-card__footer {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       justify-content: space-between;
+      gap: var(--space-4);
+      width: 100%;
+      flex-wrap: nowrap;
       padding-top: var(--space-4);
       border-top: 1px solid rgba(0, 0, 0, 0.08);
+      margin-top: auto;
+      min-height: 44px;
     }
 
     .vehicle-card__price {
       display: flex;
       align-items: baseline;
       gap: var(--space-1);
+      min-width: 120px;
     }
 
     .vehicle-card__price-amount {
@@ -253,6 +268,7 @@ import { Vehicle } from '../../../core/models';
       font-size: 1.25rem;
       font-weight: var(--weight-semibold);
       color: var(--color-near-black);
+      font-variant-numeric: tabular-nums;
     }
 
     .vehicle-card__price-unit {
@@ -298,6 +314,7 @@ import { Vehicle } from '../../../core/models';
 
     .vehicle-card--compact .vehicle-card__footer {
       padding-top: var(--space-3);
+      margin-top: auto;
     }
   `]
 })
@@ -319,11 +336,11 @@ export class VehicleCardComponent {
 
   fuelLabel = computed(() => {
     const labels: Record<string, string> = {
-      'PETROL': 'Essence',
+      'ESSENCE': 'Essence',
       'DIESEL': 'Diesel',
       'HYBRID': 'Hybride',
       'ELECTRIC': 'Électrique'
     };
-    return labels[this.vehicle.fuel] || this.vehicle.fuel;
+    return labels[this.vehicle.fuelType] || this.vehicle.fuelType;
   });
 }

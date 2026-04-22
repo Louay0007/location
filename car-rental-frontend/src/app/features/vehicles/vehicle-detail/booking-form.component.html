@@ -1,0 +1,134 @@
+<div class="booking-form">
+  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+    <div class="form-section">
+      <h4 class="section-title">Dates et lieux</h4>
+      
+      <div class="date-info">
+        <div class="date-item">
+          <span class="date-label">Début:</span>
+          <span class="date-value">{{ dates.startDate | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="date-item">
+          <span class="date-label">Fin:</span>
+          <span class="date-value">{{ dates.endDate | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="date-item">
+          <span class="date-label">Durée:</span>
+          <span class="date-value">{{ getDuration() }} jour(s)</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="pickupLocation">Lieu de prise en charge</label>
+          <input
+            id="pickupLocation"
+            type="text"
+            class="form-input"
+            formControlName="pickupLocation"
+            placeholder="Agence principale"
+          />
+          @if (bookingForm.get('pickupLocation')?.invalid && bookingForm.get('pickupLocation')?.touched) {
+            <span class="error-message">Ce champ est requis</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="returnLocation">Lieu de restitution</label>
+          <input
+            id="returnLocation"
+            type="text"
+            class="form-input"
+            formControlName="returnLocation"
+            placeholder="Agence principale"
+          />
+          @if (bookingForm.get('returnLocation')?.invalid && bookingForm.get('returnLocation')?.touched) {
+            <span class="error-message">Ce champ est requis</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="pickupTime">Heure de prise en charge</label>
+          <input
+            id="pickupTime"
+            type="time"
+            class="form-input"
+            formControlName="pickupTime"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="returnTime">Heure de restitution</label>
+          <input
+            id="returnTime"
+            type="time"
+            class="form-input"
+            formControlName="returnTime"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4 class="section-title">Notes (optionnel)</h4>
+      <div class="form-group">
+        <textarea
+          class="form-textarea"
+          formControlName="notes"
+          rows="3"
+          placeholder="Instructions spéciales, demandes particulières..."
+        ></textarea>
+      </div>
+    </div>
+
+    @if (priceCalculation()) {
+      <div class="price-summary">
+        <h4 class="section-title">Récapitulatif</h4>
+        
+        <div class="price-row">
+          <span class="price-label">Tarif journalier</span>
+          <span class="price-value">{{ formatPrice(priceCalculation()!.dailyRate) }}</span>
+        </div>
+
+        <div class="price-row">
+          <span class="price-label">Sous-total ({{ priceCalculation()!.durationDays }} jours)</span>
+          <span class="price-value">{{ formatPrice(priceCalculation()!.subtotal) }}</span>
+        </div>
+
+        @if (priceCalculation()!.discountAmount > 0) {
+          <div class="price-row discount">
+            <span class="price-label">Remise</span>
+            <span class="price-value">-{{ formatPrice(priceCalculation()!.discountAmount) }}</span>
+          </div>
+        }
+
+        <div class="price-row">
+          <span class="price-label">Caution</span>
+          <span class="price-value">{{ formatPrice(priceCalculation()!.depositAmount) }}</span>
+        </div>
+
+        <div class="price-row total">
+          <span class="price-label">Total</span>
+          <span class="price-value">{{ formatPrice(priceCalculation()!.totalAmount) }}</span>
+        </div>
+      </div>
+    }
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-primary btn-large"
+        [disabled]="isSubmitting() || bookingForm.invalid"
+      >
+        @if (isSubmitting()) {
+          <span class="spinner"></span>
+          Traitement en cours...
+        } @else {
+          Confirmer la réservation
+        }
+      </button>
+    </div>
+  </form>
+</div>
