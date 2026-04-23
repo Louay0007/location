@@ -49,7 +49,12 @@ export class AuthService {
       select: { id: true, email: true, firstName: true, lastName: true, role: true },
     });
 
-    await this.mailService.sendWelcome(user.email, user.firstName, emailVerifyToken);
+    try {
+      await this.mailService.sendWelcome(user.email, user.firstName, emailVerifyToken);
+    } catch (emailError) {
+      console.warn('Failed to send welcome email:', emailError.message);
+    }
+
     return { message: 'Compte créé. Veuillez vérifier votre email.', user };
   }
 

@@ -8,6 +8,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { ThemeService } from '../../core/services/theme.service';
+import { NotificationService } from '../../core/services/notifications.service';
 
 @Component({
   selector: 'app-nav',
@@ -67,6 +68,16 @@ import { ThemeService } from '../../core/services/theme.service';
           </button>
 
           @if (isAuthenticated()) {
+            <!-- Notifications -->
+            <button class="nav__notification" routerLink="/dashboard/notifications" [attr.aria-label]="'Notifications' + (unreadCount() > 0 ? ' (' + unreadCount() + ' unread)' : '')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              @if (unreadCount() > 0) {
+                <span class="nav__notification-badge">{{ unreadCount() > 99 ? '99+' : unreadCount() }}</span>
+              }
+            </button>
             <a routerLink="/my-bookings" class="nav__action nav__action--secondary">
               Mes réservations
             </a>
@@ -581,6 +592,61 @@ import { ThemeService } from '../../core/services/theme.service';
       width: 20px;
       height: 20px;
     }
+
+    .nav__notification {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      color: var(--color-white);
+      cursor: pointer;
+      border-radius: var(--radius-circle);
+      transition: background var(--duration-fast) var(--ease-default);
+    }
+
+    :host-context([data-theme="light"]) .nav__notification {
+      color: var(--color-near-black);
+    }
+
+    .nav__notification:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    :host-context([data-theme="light"]) .nav__notification:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .nav__notification svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .nav__notification-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      background: var(--color-error);
+      color: var(--color-white);
+      font-size: 0.625rem;
+      font-weight: var(--weight-semibold);
+      border-radius: var(--radius-pill);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      border: 2px solid var(--color-pure-black);
+    }
+
+    :host-context([data-theme="light"]) .nav__notification-badge {
+      border-color: #ffffff;
+    }
   `]
 })
 export class NavComponent implements OnInit, OnDestroy {
@@ -588,6 +654,7 @@ export class NavComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly themeService = inject(ThemeService);
+  private readonly notificationService = inject(NotificationService);
 
   private readonly isBrowser = isPlatformBrowser(this.platformId);
 
@@ -595,6 +662,9 @@ export class NavComponent implements OnInit, OnDestroy {
   isMobileMenuOpen = signal(false);
   isUserMenuOpen = signal(false);
   isDarkMode = this.themeService.isDarkMode;
+
+  private readonly _unreadCount = signal(0);
+  readonly unreadCount = this._unreadCount.asReadonly();
 
   isAuthenticated = this.authService.isAuthenticated;
   isAdmin = this.authService.isAdmin;
@@ -609,6 +679,20 @@ export class NavComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.isBrowser) {
       document.addEventListener('click', this.handleOutsideClick.bind(this));
+    }
+    this.loadUnreadCount();
+  }
+
+  private loadUnreadCount(): void {
+    if (this.authService.isAuthenticated()) {
+      this.notificationService.getUnreadCount().subscribe({
+        next: (response) => {
+          this._unreadCount.set(response.unread);
+        },
+        error: () => {
+          // Silently fail, notification badge will just show 0
+        }
+      });
     }
   }
 

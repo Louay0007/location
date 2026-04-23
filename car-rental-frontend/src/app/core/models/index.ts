@@ -270,6 +270,19 @@ export interface TopVehicle {
   totalRevenue: number;
 }
 
+export interface PaymentMethodDistribution {
+  method: string;
+  count: number;
+  percentage: number;
+}
+
+export interface MaintenanceStats {
+  total: number;
+  upcoming: number;
+  overdue: number;
+  completedThisMonth: number;
+}
+
 // ─────────────────────────────────────────────────────────────────────────
 // Maintenance
 // ─────────────────────────────────────────────────────────────────────────
@@ -337,6 +350,12 @@ export interface Notification {
 
 export interface NotificationCount {
   unread: number;
+}
+
+export interface UserStats {
+  totalBookings: number;
+  totalSpent: number;
+  activeBookings: number;
 }
 
 // ─────────────────────────────────────────────────────────────────────────

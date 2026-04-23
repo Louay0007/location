@@ -13,7 +13,7 @@ import { ApiResponse, ErrorResponse } from '../models';
 })
 export class ApiService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = '/api/v1';
+  private readonly baseUrl = 'http://localhost:3000/api/v1';
 
   // ─────────────────────────────────────────────────────────────────────────
   // HTTP Methods
